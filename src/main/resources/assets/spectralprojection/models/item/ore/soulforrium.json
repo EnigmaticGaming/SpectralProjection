@@ -1,5 +1,5 @@
 {
-  "parent":"spectralprojection:block/metrusiteOre",
+  "parent":"spectralprojection:block/ore/soulforrium",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],

@@ -45,9 +45,9 @@ repositories {
 }
 
 dependencies {
-    compile "codechicken:CodeChickenCore:1.8-1.0.5.36:dev"
-    compile "codechicken:NotEnoughItems:1.8-1.0.5.93:dev"
-    compile "codechicken:CodeChickenLib:1.8-1.1.2.115:dev"
+    //compile "codechicken:CodeChickenCore:1.8-1.0.5.36:dev"
+    //compile "codechicken:NotEnoughItems:1.8-1.0.5.93:dev"
+    //compile "codechicken:CodeChickenLib:1.8-1.1.2.115:dev"
 }
 
 processResources

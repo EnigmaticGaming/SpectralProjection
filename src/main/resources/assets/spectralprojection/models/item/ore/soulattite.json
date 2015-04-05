@@ -1,5 +1,5 @@
 {
-  "parent":"spectralprojection:block/quartzOre",
+  "parent":"spectralprojection:block/ore/soulattite",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],

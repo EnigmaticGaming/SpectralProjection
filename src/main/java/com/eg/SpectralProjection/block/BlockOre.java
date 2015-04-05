@@ -14,10 +14,14 @@ import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Creysys on 04 Apr 15.
@@ -25,7 +29,6 @@ import java.util.List;
 public class BlockOre extends Block implements IUnlocalizedNameProvider, IRenderRegisterHandler {
 
     public static final PropertyEnum VARIANT = PropertyEnum.create("variant", EnumType.class);
-
 
     public BlockOre() {
         super(Material.rock);
@@ -62,6 +65,12 @@ public class BlockOre extends Block implements IUnlocalizedNameProvider, IRender
     }
 
     @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        //TODO: do
+        return super.getItemDropped(state, rand, fortune);
+    }
+
+    @Override
     public void getSubBlocks(Item item, CreativeTabs tab, List list) {
         for(int i = 0; i < 4; i++){
             list.add(new ItemStack(item, 1, i));
@@ -70,7 +79,7 @@ public class BlockOre extends Block implements IUnlocalizedNameProvider, IRender
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return "tile." + BlockOre.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+        return "tile.ore." + BlockOre.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
     }
 
     @Override
@@ -79,7 +88,7 @@ public class BlockOre extends Block implements IUnlocalizedNameProvider, IRender
 
         EnumType[] types = EnumType.values();
         for(int i = 0; i < types.length; i++){
-            String s = types[i].getUnlocalizedName();
+            String s = "ore/" + types[i].getUnlocalizedName();
 
             ModelBakery.addVariantName(item, SpectralProjection.modid + ":" + s);
             RenderRegister.register(this, i , s);
@@ -87,10 +96,10 @@ public class BlockOre extends Block implements IUnlocalizedNameProvider, IRender
     }
 
     public enum EnumType implements IStringSerializable {
-        SOULFFORIUM(0, "soulforriumOre"),
-        SOULATTITE(1, "soulattiteOre"),
-        METRUSITE(2, "metrusiteOre"),
-        QUARTZ(3, "quartzOre");
+        SOULFFORIUM(0, "soulforrium"),
+        SOULATTITE(1, "soulattite"),
+        METRUSITE(2, "metrusite"),
+        QUARTZ(3, "quartz");
 
         private int meta;
         private String name;

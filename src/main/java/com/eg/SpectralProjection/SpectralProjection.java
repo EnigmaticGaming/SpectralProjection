@@ -2,6 +2,8 @@ package com.eg.SpectralProjection;
 
 import com.eg.SpectralProjection.block.BlockOre;
 import com.eg.SpectralProjection.item.ItemBase;
+import com.eg.SpectralProjection.item.ItemIngot;
+import com.eg.SpectralProjection.item.ItemNugget;
 import com.eg.SpectralProjection.item.ItemTest;
 import com.eg.SpectralProjection.proxy.ProxyServer;
 import com.eg.SpectralProjection.world.WorldGenerator;
@@ -42,6 +44,8 @@ public class SpectralProjection
 
     //Items
     public static Item itemTest;
+    public static Item itemIngot;
+    public static Item itemNugget;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
@@ -52,9 +56,8 @@ public class SpectralProjection
 
         //Items
         itemTest = new ItemTest();
-
-
-        //TODO: just do it better
+        itemIngot = new ItemIngot();
+        itemNugget = new ItemNugget();
 
 
         GameRegistry.registerWorldGenerator(new WorldGenerator(), 2);
@@ -67,5 +70,7 @@ public class SpectralProjection
 
         //Register item renderers
         proxy.registerRenderer(itemTest);
+        proxy.registerRenderer(itemIngot);
+        proxy.registerRenderer(itemNugget);
     }
 }

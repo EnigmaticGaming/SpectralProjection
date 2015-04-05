@@ -1,11 +1,22 @@
 itemGroup.spectralprojection=Spectral Projection
 
 #Blocks
-tile.soulforriumOre.name=Soulforrium Ore
-tile.soulattiteOre.name=Soulattite Ore
-tile.metrusiteOre.name=Metrusite Ore
-tile.quartzOre.name=Quartz Ore
+#Ores
+tile.ore.soulforrium.name=Soulforrium Ore
+tile.ore.soulattite.name=Soulattite Ore
+tile.ore.metrusite.name=Metrusite Ore
+tile.ore.quartz.name=Quartz Ore
 
 
 #Items
 item.test.name=Test Item
+
+#Ingots
+item.ingot.soulforrium.name=Soulforrium Ingot
+item.ingot.soulattite.name=Soulattite Ingot
+item.ingot.metrusite.name=Metrusite Ingot
+
+#Nuggets
+item.nugget.soulforrium.name=Soulforrium Nugget
+item.nugget.soulattite.name=Soulattite Nugget
+item.nugget.metrusite.name=Metrusite Nugget
