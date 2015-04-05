@@ -7,6 +7,7 @@ import com.eg.SpectralProjection.proxy.ProxyServer;
 import com.eg.SpectralProjection.world.WorldGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -16,6 +17,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import scala.tools.cmd.Spec;
 
 import java.util.ArrayList;
 
@@ -52,12 +54,18 @@ public class SpectralProjection
         itemTest = new ItemTest();
 
 
+        //TODO: just do it better
+
+
         GameRegistry.registerWorldGenerator(new WorldGenerator(), 2);
     }
 
     @EventHandler
-    public void init(FMLInitializationEvent event)
-    {
-        proxy.registerItemRenderer(itemTest);
+    public void init(FMLInitializationEvent event) {
+        //Register block renderers
+        proxy.registerRenderer(blockOre);
+
+        //Register item renderers
+        proxy.registerRenderer(itemTest);
     }
 }

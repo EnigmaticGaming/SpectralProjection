@@ -1,11 +1,16 @@
 package com.eg.SpectralProjection.block;
 
 import com.eg.SpectralProjection.SpectralProjection;
-import com.eg.SpectralProjection.item.ItemOre;
+import com.eg.SpectralProjection.item.ItemBlockMeta;
+import com.eg.SpectralProjection.util.client.IRenderRegisterHandler;
+import com.eg.SpectralProjection.util.IUnlocalizedNameProvider;
+import com.eg.SpectralProjection.util.client.RenderRegister;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,7 +22,7 @@ import java.util.List;
 /**
  * Created by Creysys on 04 Apr 15.
  */
-public class BlockOre extends Block {
+public class BlockOre extends Block implements IUnlocalizedNameProvider, IRenderRegisterHandler {
 
     public static final PropertyEnum VARIANT = PropertyEnum.create("variant", EnumType.class);
 
@@ -25,15 +30,21 @@ public class BlockOre extends Block {
     public BlockOre() {
         super(Material.rock);
 
+        setUnlocalizedName("ore");
         setDefaultState(blockState.getBaseState().withProperty(VARIANT, EnumType.SOULFFORIUM));
         setHardness(3.0F);
         setResistance(5.0F);
         setStepSound(soundTypePiston);
         setCreativeTab(SpectralProjection.creativeTab);
 
-        GameRegistry.registerBlock(this, ItemOre.class, "ore");
+        GameRegistry.registerBlock(this, ItemBlockMeta.class, "ore");
     }
 
+
+    @Override
+    protected BlockState createBlockState() {
+        return new BlockState(this, VARIANT);
+    }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
@@ -41,8 +52,13 @@ public class BlockOre extends Block {
     }
 
     @Override
-    public int damageDropped(IBlockState state) {
+    public int getMetaFromState(IBlockState state) {
         return ((EnumType)state.getValue(VARIANT)).getMetadata();
+    }
+
+    @Override
+    public int damageDropped(IBlockState state) {
+        return getMetaFromState(state);
     }
 
     @Override
@@ -52,15 +68,33 @@ public class BlockOre extends Block {
         }
     }
 
+    @Override
+    public String getUnlocalizedName(ItemStack stack) {
+        return "tile." + BlockOre.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+    }
+
+    @Override
+    public void registerRenderers() {
+        Item item = Item.getItemFromBlock(this);
+
+        EnumType[] types = EnumType.values();
+        for(int i = 0; i < types.length; i++){
+            String s = types[i].getUnlocalizedName();
+
+            ModelBakery.addVariantName(item, SpectralProjection.modid + ":" + s);
+            RenderRegister.register(this, i , s);
+        }
+    }
+
     public enum EnumType implements IStringSerializable {
         SOULFFORIUM(0, "soulforriumOre"),
         SOULATTITE(1, "soulattiteOre"),
         METRUSITE(2, "metrusiteOre"),
         QUARTZ(3, "quartzOre");
 
-        private final int meta;
-        private final String name;
-        private final String unlocalizedName;
+        private int meta;
+        private String name;
+        private String unlocalizedName;
 
         EnumType(int meta, String name) {
             this(meta, name, name);
@@ -87,6 +121,7 @@ public class BlockOre extends Block {
         public String getUnlocalizedName() {
             return this.unlocalizedName;
         }
+
 
         public static EnumType byMetadata(int meta) {
             if (meta < 0 || meta >= values().length) {

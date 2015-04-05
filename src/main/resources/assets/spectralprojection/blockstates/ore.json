@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "variant=soulforriumore": { "model": "spectralprojection:soulforriumOre" },
+    "variant=soulattiteore": { "model": "spectralprojection:soulattiteOre" },
+    "variant=metrusiteore": { "model": "spectralprojection:metrusiteOre" },
+    "variant=quartzore": { "model": "spectralprojection:quartzOre" }
+  }
+}

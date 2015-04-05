@@ -8,6 +8,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -15,24 +16,28 @@ import java.util.Random;
  */
 public class WorldGenerator implements IWorldGenerator {
 
+    private ArrayList<WorldGenOre> ores;
+
+    public WorldGenerator(){
+        ores = new ArrayList<WorldGenOre>();
+        ores.add(new WorldGenOre(SpectralProjection.blockOre.getDefaultState().withProperty(BlockOre.VARIANT, BlockOre.EnumType.SOULFFORIUM), 0, 50, 10, 5));
+        ores.add(new WorldGenOre(SpectralProjection.blockOre.getDefaultState().withProperty(BlockOre.VARIANT, BlockOre.EnumType.SOULATTITE), 0, 50, 10, 5));
+        ores.add(new WorldGenOre(SpectralProjection.blockOre.getDefaultState().withProperty(BlockOre.VARIANT, BlockOre.EnumType.METRUSITE), 0, 50, 10, 5));
+        ores.add(new WorldGenOre(SpectralProjection.blockOre.getDefaultState().withProperty(BlockOre.VARIANT, BlockOre.EnumType.QUARTZ), 0, 50, 10, 5));
+    }
+
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
         switch(world.provider.getDimensionId()){
             case 0:
-
+                generateOverworld(world, random, chunkX, chunkZ);
                 break;
         }
     }
 
-    public void generateSurface(World world, Random rand, int chunkX, int chunkZ) {
-        for (int k = 0; k < 16; k++) {
-            int firstBlockXCoord = chunkX + rand.nextInt(16);
-            int firstBlockZCoord = chunkZ + rand.nextInt(16);
-            //Will be found between y = 0 and y = 20
-            int quisqueY = rand.nextInt(20);
-            BlockPos quisquePos = new BlockPos(firstBlockXCoord, quisqueY, firstBlockZCoord);
-            //The 10 as the second parameter sets the maximum vein size
-            (new WorldGenMinable(SpectralProjection.blockOre.getDefaultState().withProperty(BlockOre.VARIANT, BlockOre.EnumType.SOULFFORIUM), 10)).generate(world, rand, quisquePos);
+    public void generateOverworld(World world, Random random, int chunkX, int chunkZ) {
+        for (int i = 0; i < ores.size(); i++) {
+            ores.get(i).generate(world, chunkX, chunkZ, random);
         }
     }
 }
