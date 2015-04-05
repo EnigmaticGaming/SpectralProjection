@@ -43,7 +43,6 @@ public class ItemIngot extends ItemBase implements IRenderRegisterHandler {
 
         soulforrium = registerIngot("soulforrium");
         soulattite = registerIngot("soulattite");
-        metrusite = registerIngot("metrusite");
     }
 
     public ItemStack registerIngot(String name){

@@ -20,3 +20,7 @@ item.ingot.metrusite.name=Metrusite Ingot
 item.nugget.soulforrium.name=Soulforrium Nugget
 item.nugget.soulattite.name=Soulattite Nugget
 item.nugget.metrusite.name=Metrusite Nugget
+
+#Materials
+item.material.metrusitePaste.name=Metrusite Paste
+item.material.quartzShard.name=Quartz Shard

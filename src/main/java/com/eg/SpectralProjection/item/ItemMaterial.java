@@ -1,8 +1,10 @@
 package com.eg.SpectralProjection.item;
 
 import com.eg.SpectralProjection.SpectralProjection;
+import com.eg.SpectralProjection.block.BlockOre;
 import com.eg.SpectralProjection.util.client.IRenderRegisterHandler;
 import com.eg.SpectralProjection.util.client.RenderRegister;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -19,53 +21,52 @@ import java.util.List;
 /**
  * Created by Creysys on 05 Apr 15.
  */
-public class ItemNugget extends ItemBase implements IRenderRegisterHandler {
+public class ItemMaterial extends ItemBase implements IRenderRegisterHandler {
 
-    public static ArrayList<String> nuggets;
+    public static ArrayList<String> materials;
 
-    public static ItemStack soulforrium;
-    public static ItemStack soulattite;
+    public static ItemStack metrusitePaste;
+    public static ItemStack quartzShard;
 
-    public ItemNugget() {
-        super("nugget");
+    public ItemMaterial() {
+        super("material");
 
         setMaxDamage(0);
         setHasSubtypes(true);
 
-        registerNuggets();
+        registerMaterials();
     }
 
-    public void registerNuggets(){
-        nuggets = new ArrayList<String>();
+    public void registerMaterials(){
+        materials = new ArrayList<String>();
 
-        soulforrium = registerNugget("soulforrium");
-        soulattite = registerNugget("soulattite");
+        metrusitePaste = registerMaterial("metrusitePaste");
+        quartzShard = registerMaterial("quartzShard");
     }
 
-    public ItemStack registerNugget(String name){
-        nuggets.add(name);
-        ItemStack s = new ItemStack(this, 1, nuggets.size() - 1);
-        OreDictionary.registerOre("nugget" + StringUtils.capitalize(name), s);
+    public ItemStack registerMaterial(String name){
+        materials.add(name);
+        ItemStack s = new ItemStack(this, 1, materials.size() - 1);
         return s;
     }
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        int i = MathHelper.clamp_int(stack.getItemDamage(), 0, nuggets.size() - 1);
-        return "item.nugget." + nuggets.get(i);
+        int i = MathHelper.clamp_int(stack.getItemDamage(), 0, materials.size() - 1);
+        return "item.material." + materials.get(i);
     }
 
     @Override
     public void getSubItems(Item item, CreativeTabs tab, List list) {
-        for(int i = 0; i < nuggets.size(); i++) {
+        for(int i = 0; i < materials.size(); i++) {
             list.add(new ItemStack(this, 1, i));
         }
     }
 
     @Override
     public void registerRenderers() {
-        for(int i = 0; i < nuggets.size(); i++){
-            String s = "nugget/" + nuggets.get(i);
+        for(int i = 0; i < materials.size(); i++){
+            String s = "material/" + materials.get(i);
 
             ModelBakery.addVariantName(this, SpectralProjection.modid + ":" + s);
             RenderRegister.register(this, i, s);

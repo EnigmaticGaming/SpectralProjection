@@ -1,11 +1,9 @@
 package com.eg.SpectralProjection;
 
 import com.eg.SpectralProjection.block.BlockOre;
-import com.eg.SpectralProjection.item.ItemBase;
-import com.eg.SpectralProjection.item.ItemIngot;
-import com.eg.SpectralProjection.item.ItemNugget;
-import com.eg.SpectralProjection.item.ItemTest;
+import com.eg.SpectralProjection.item.*;
 import com.eg.SpectralProjection.proxy.ProxyServer;
+import com.eg.SpectralProjection.recipe.RecipeRegister;
 import com.eg.SpectralProjection.world.WorldGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -17,6 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import scala.tools.cmd.Spec;
@@ -39,38 +38,55 @@ public class SpectralProjection
 
     public static CreativeTabs creativeTab;
 
-    //Blocks
-    public static Block blockOre;
-
     //Items
     public static Item itemTest;
+
     public static Item itemIngot;
     public static Item itemNugget;
+    public static Item itemMaterial;
+
+
+    //Blocks
+    public static Block blockOre;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
         creativeTab = new SpectralProjectionCreativeTab();
 
+        //Items
+        itemTest = new ItemTest();
+
+        itemIngot = new ItemIngot();
+        itemNugget = new ItemNugget();
+        itemMaterial = new ItemMaterial();
+
         //Blocks
         blockOre = new BlockOre();
 
-        //Items
-        itemTest = new ItemTest();
-        itemIngot = new ItemIngot();
-        itemNugget = new ItemNugget();
-
+        RecipeRegister.preInitialize();
 
         GameRegistry.registerWorldGenerator(new WorldGenerator(), 2);
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        //Register block renderers
-        proxy.registerRenderer(blockOre);
+        //Register recipes after blocks are initialized
+        RecipeRegister.initialize();
 
         //Register item renderers
         proxy.registerRenderer(itemTest);
+
         proxy.registerRenderer(itemIngot);
         proxy.registerRenderer(itemNugget);
+        proxy.registerRenderer(itemMaterial);
+
+
+        //Register block renderers
+        proxy.registerRenderer(blockOre);
+    }
+
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent event){
+        RecipeRegister.postInitialize();
     }
 }
