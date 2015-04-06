@@ -1,7 +1,10 @@
 {
   "variants": {
-    "variant=soulurgist": { "model": "spectralprojection:pylon/soulurgist" },
-    "variant=soulforrium": { "model": "spectralprojection:pylon/soulforrium" },
-    "variant=soulattite": { "model": "spectralprojection:pylon/soulattite" }
+    "active=false,variant=soulurgist": { "model": "spectralprojection:pylon/soulurgist" },
+    "active=false,variant=soulforrium": { "model": "spectralprojection:pylon/soulforrium" },
+    "active=false,variant=soulattite": { "model": "spectralprojection:pylon/soulattite" },
+	
+    "active=false,variant=crystallattice": { "model": "spectralprojection:pylon/crystalLattice/inactive" },
+    "active=true,variant=crystallattice": { "model": "spectralprojection:pylon/crystalLattice/active" }
   }
 }

@@ -24,7 +24,7 @@ public class RecipesCrafting {
         GameRegistry.addRecipe(new ItemStack(SpectralProjection.blockPylon, 1, BlockPylon.EnumVariant.SOULURGIST.getMetadata()), "DMD", "MCM", "DMD", 'D', Items.diamond, 'M', ItemMaterial.metrusitePaste, 'C', ItemMaterial.soulurgyCore);
 
         //Blocks
-        GameRegistry.addRecipe(new ItemStack(SpectralProjection.blockCrystalLatticePylon), "CCC", "CPC", "CCC", 'C', Blocks.cobblestone, 'P', ItemMaterial.purifiedCrystal);
+        GameRegistry.addRecipe(new ItemStack(SpectralProjection.blockPylon, 1, BlockPylon.EnumVariant.CRYSTALLATTICE.getMetadata()), "CCC", "CPC", "CCC", 'C', Blocks.cobblestone, 'P', ItemMaterial.purifiedCrystal);
 
         //Metal blocks
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SpectralProjection.blockMetal, 1, BlockMetal.EnumVariant.SOULFFORIUM.getMetadata()), "III", "III", "III", 'I', "ingotSoulforrium"));

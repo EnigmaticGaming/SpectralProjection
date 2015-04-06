@@ -7,14 +7,20 @@ import com.eg.SpectralProjection.util.client.IRenderRegisterHandler;
 import com.eg.SpectralProjection.util.client.RenderRegister;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.List;
@@ -25,6 +31,7 @@ import java.util.List;
 public class BlockPylon extends Block implements IRenderRegisterHandler, IUnlocalizedNameProvider {
 
     public static final PropertyEnum VARIANT = PropertyEnum.create("variant", EnumVariant.class);
+    public static final PropertyBool ACTIVE = PropertyBool.create("active");
 
 
     public BlockPylon() {
@@ -32,7 +39,7 @@ public class BlockPylon extends Block implements IRenderRegisterHandler, IUnloca
 
         String name = "pylon";
         setUnlocalizedName(name);
-        setDefaultState(blockState.getBaseState().withProperty(VARIANT, EnumVariant.SOULFORRIUM));
+        setDefaultState(blockState.getBaseState().withProperty(VARIANT, EnumVariant.SOULFORRIUM).withProperty(ACTIVE, false));
         setHardness(5.0F);
         setResistance(5.0F);
         setStepSound(soundTypeStone);
@@ -43,17 +50,24 @@ public class BlockPylon extends Block implements IRenderRegisterHandler, IUnloca
 
     @Override
     public BlockState createBlockState() {
-        return new BlockState(this, VARIANT);
+        return new BlockState(this, VARIANT, ACTIVE);
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return blockState.getBaseState().withProperty(VARIANT, EnumVariant.byMetadata(meta));
+        boolean active = (meta & 1) > 0;
+        int variant = meta >>> 1;
+
+        return getDefaultState().withProperty(VARIANT, EnumVariant.byMetadata(variant)).withProperty(ACTIVE, active);
     }
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return ((EnumVariant) state.getValue(VARIANT)).getMetadata();
+        int variant = ((EnumVariant) state.getValue(VARIANT)).getMetadata();
+        boolean active = (Boolean)state.getValue(ACTIVE);
+
+        int ret = (variant << 1) | (active ? 1 : 0);
+        return ret;
     }
 
     @Override
@@ -65,7 +79,7 @@ public class BlockPylon extends Block implements IRenderRegisterHandler, IUnloca
     public void getSubBlocks(Item item, CreativeTabs tab, List list) {
         EnumVariant variants[] = EnumVariant.values();
         for(int i = 0; i < variants.length; i++){
-            list.add(new ItemStack(this, 1, i));
+            list.add(new ItemStack(this, 1, getMetaFromState(getDefaultState().withProperty(VARIANT, variants[i]))));
         }
     }
 
@@ -73,38 +87,52 @@ public class BlockPylon extends Block implements IRenderRegisterHandler, IUnloca
     public void registerRenderers() {
         Item item = Item.getItemFromBlock(this);
 
-        EnumVariant[] types = EnumVariant.values();
-        for (int i = 0; i < types.length; i++) {
-            String s = "pylon/" + types[i].getUnlocalizedName();
+        EnumVariant[] variants = EnumVariant.values();
+        for (int i = 0; i < variants.length; i++) {
+            String s = "pylon/" + variants[i].getUnlocalizedName();
 
-            ModelBakery.addVariantName(item, SpectralProjection.modid + ":" + s);
-            RenderRegister.register(this, i, s);
+            if (variants[i].hasState) {
+                String states[] = new String[]{"inactive", "active"};
+                for (int j = 0; j < states.length; j++) {
+                    ModelBakery.addVariantName(item, SpectralProjection.modid + ":" + s + "/" + states[j]);
+                }
+                s += "/" + states[0];
+            } else {
+                ModelBakery.addVariantName(item, SpectralProjection.modid + ":" + s);
+            }
+
+            RenderRegister.register(this, getMetaFromState(getDefaultState().withProperty(VARIANT, variants[i])), s);
         }
     }
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return "tile.pylon." + EnumVariant.byMetadata(stack.getMetadata()).getUnlocalizedName();
+        IBlockState blockState = getStateFromMeta(stack.getMetadata());
+        return "tile.pylon." + ((EnumVariant)blockState.getValue(VARIANT)).getUnlocalizedName();
     }
 
 
     public enum EnumVariant implements IStringSerializable {
-        SOULFORRIUM(0, "soulforrium"),
-        SOULATTITE(1, "soulattite"),
-        SOULURGIST(2, "soulurgist");
+        SOULFORRIUM(0, "soulforrium", false),
+        SOULATTITE(1, "soulattite", false),
+        SOULURGIST(2, "soulurgist", false),
+
+        CRYSTALLATTICE(3, "crystalLattice", true);
 
         private int meta;
         private String name;
         private String unlocalizedName;
+        public boolean hasState;
 
-        EnumVariant(int meta, String name) {
-            this(meta, name, name);
+        EnumVariant(int meta, String name, boolean hasState) {
+            this(meta, name, name, hasState);
         }
 
-        EnumVariant(int meta, String name, String unlocalizedName) {
+        EnumVariant(int meta, String name, String unlocalizedName, boolean hasState) {
             this.meta = meta;
             this.name = name;
             this.unlocalizedName = unlocalizedName;
+            this.hasState = hasState;
         }
 
         public int getMetadata() {

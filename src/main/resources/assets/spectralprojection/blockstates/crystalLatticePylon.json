@@ -1,6 +1,0 @@
-{
-  "variants": {
-    "variant=inactive": { "model": "spectralprojection:crystalLatticePylon/inactive" },
-    "variant=active": { "model": "spectralprojection:crystalLatticePylon/active" }
-  }
-}

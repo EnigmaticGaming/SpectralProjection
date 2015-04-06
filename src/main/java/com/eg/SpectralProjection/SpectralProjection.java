@@ -52,7 +52,6 @@ public class SpectralProjection
     public static Block blockOre;
     public static Block blockMetal;
     public static Block blockOuijaBoard;
-    public static Block blockCrystalLatticePylon;
     public static Block blockPylon;
 
     @EventHandler
@@ -70,7 +69,6 @@ public class SpectralProjection
         blockOre = new BlockOre();
         blockMetal = new BlockMetal();
         blockOuijaBoard = new BlockOuijaBoard();
-        blockCrystalLatticePylon = new BlockCrystalLatticePylon();
         blockPylon = new BlockPylon();
 
         RecipeRegister.preInitialize();
@@ -96,7 +94,6 @@ public class SpectralProjection
         proxy.registerRenderer(blockOre);
         proxy.registerRenderer(blockMetal);
         proxy.registerRenderer(blockOuijaBoard);
-        proxy.registerRenderer(blockCrystalLatticePylon);
         proxy.registerRenderer(blockPylon);
     }
 
