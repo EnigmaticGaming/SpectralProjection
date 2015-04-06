@@ -1,6 +1,7 @@
 package com.eg.SpectralProjection;
 
 import com.eg.SpectralProjection.block.*;
+import com.eg.SpectralProjection.gui.GuiHandler;
 import com.eg.SpectralProjection.item.*;
 import com.eg.SpectralProjection.proxy.ProxyServer;
 import com.eg.SpectralProjection.recipe.RecipeRegister;
@@ -17,6 +18,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import scala.tools.cmd.Spec;
 
@@ -74,6 +76,7 @@ public class SpectralProjection
         RecipeRegister.preInitialize();
 
         GameRegistry.registerWorldGenerator(new WorldGenerator(), 2);
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
     }
 
     @EventHandler
