@@ -42,6 +42,7 @@ public class SpectralProjection
 
     //Items
     public static Item itemTest;
+    public static Item itemSoulTag;
 
     public static Item itemIngot;
     public static Item itemNugget;
@@ -60,6 +61,7 @@ public class SpectralProjection
 
         //Items
         itemTest = new ItemTest();
+        itemSoulTag = new ItemSoulTag();
 
         itemIngot = new ItemIngot();
         itemNugget = new ItemNugget();
@@ -84,6 +86,7 @@ public class SpectralProjection
 
         //Register item renderers
         proxy.registerRenderer(itemTest);
+        proxy.registerRenderer(itemSoulTag);
 
         proxy.registerRenderer(itemIngot);
         proxy.registerRenderer(itemNugget);

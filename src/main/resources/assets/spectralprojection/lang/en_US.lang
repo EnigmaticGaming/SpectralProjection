@@ -3,6 +3,7 @@ itemGroup.spectralprojection=Spectral Projection
 
 #Items
 item.test.name=Test Item
+item.soulTag.name=Soul Tag
 
 #Ingots
 item.ingot.soulforrium.name=Soulforrium Ingot
@@ -20,6 +21,7 @@ item.material.quartzShard.name=Quartz Shard
 item.material.purifiedCrystal.name=Purified Crystal
 item.material.attunedCrystal.name=Attuned Crystal
 item.material.soulurgyCore.name=Soulurgy Core
+item.material.glassJar.name=Glass Jar
 
 
 #Blocks

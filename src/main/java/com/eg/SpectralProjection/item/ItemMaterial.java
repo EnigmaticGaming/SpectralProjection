@@ -30,6 +30,7 @@ public class ItemMaterial extends ItemBase implements IRenderRegisterHandler {
     public static ItemStack purifiedCrystal;
     public static ItemStack attunedCrystal;
     public static ItemStack soulurgyCore;
+    public static ItemStack glassJar;
 
     public ItemMaterial() {
         super("material");
@@ -48,6 +49,7 @@ public class ItemMaterial extends ItemBase implements IRenderRegisterHandler {
         purifiedCrystal = registerMaterial("purifiedCrystal");
         attunedCrystal = registerMaterial("attunedCrystal");
         soulurgyCore = registerMaterial("soulurgyCore");
+        glassJar = registerMaterial("glassJar");
     }
 
     public ItemStack registerMaterial(String name){
