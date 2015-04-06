@@ -12,6 +12,7 @@ public class RecipeRegister {
         //Default recipes
 
         RecipesSmelting.register();
+        RecipesCrafting.register();
     }
 
     public static void postInitialize(){

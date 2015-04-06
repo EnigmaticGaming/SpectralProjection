@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "variant=soulurgist": { "model": "spectralprojection:pylon/soulurgist" },
+    "variant=soulforrium": { "model": "spectralprojection:pylon/soulforrium" },
+    "variant=soulattite": { "model": "spectralprojection:pylon/soulattite" }
+  }
+}

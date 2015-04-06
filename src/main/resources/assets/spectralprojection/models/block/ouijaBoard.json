@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "spectralprojection:blocks/ouijaBoard/side",
+        "down": "spectralprojection:blocks/ouijaBoard/bottom",
+        "up": "spectralprojection:blocks/ouijaBoard/top",
+        "north": "spectralprojection:blocks/ouijaBoard/side",
+        "east": "spectralprojection:blocks/ouijaBoard/side",
+        "south": "spectralprojection:blocks/ouijaBoard/side",
+        "west": "spectralprojection:blocks/ouijaBoard/side"
+    }
+}

@@ -27,6 +27,9 @@ public class ItemMaterial extends ItemBase implements IRenderRegisterHandler {
 
     public static ItemStack metrusitePaste;
     public static ItemStack quartzShard;
+    public static ItemStack purifiedCrystal;
+    public static ItemStack attunedCrystal;
+    public static ItemStack soulurgyCore;
 
     public ItemMaterial() {
         super("material");
@@ -42,6 +45,9 @@ public class ItemMaterial extends ItemBase implements IRenderRegisterHandler {
 
         metrusitePaste = registerMaterial("metrusitePaste");
         quartzShard = registerMaterial("quartzShard");
+        purifiedCrystal = registerMaterial("purifiedCrystal");
+        attunedCrystal = registerMaterial("attunedCrystal");
+        soulurgyCore = registerMaterial("soulurgyCore");
     }
 
     public ItemStack registerMaterial(String name){

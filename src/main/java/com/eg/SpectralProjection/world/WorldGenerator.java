@@ -18,10 +18,10 @@ public class WorldGenerator implements IWorldGenerator {
 
     public WorldGenerator(){
         ores = new ArrayList<WorldGenOre>();
-        ores.add(new WorldGenOre(SpectralProjection.blockOre.getDefaultState().withProperty(BlockOre.VARIANT, BlockOre.EnumVariant.SOULFFORIUM), 0, 16, 2, 2));
+        ores.add(new WorldGenOre(SpectralProjection.blockOre.getDefaultState().withProperty(BlockOre.VARIANT, BlockOre.EnumVariant.SOULFFORIUM), 0, 16, 4, 2));
         ores.add(new WorldGenOre(SpectralProjection.blockOre.getDefaultState().withProperty(BlockOre.VARIANT, BlockOre.EnumVariant.SOULATTITE), 2, 29, 6, 8));
-        ores.add(new WorldGenOre(SpectralProjection.blockOre.getDefaultState().withProperty(BlockOre.VARIANT, BlockOre.EnumVariant.METRUSITE), 16, 32, 15, 12));
-        ores.add(new WorldGenOre(SpectralProjection.blockOre.getDefaultState().withProperty(BlockOre.VARIANT, BlockOre.EnumVariant.QUARTZ), 16, 32, 4, 30));
+        ores.add(new WorldGenOre(SpectralProjection.blockOre.getDefaultState().withProperty(BlockOre.VARIANT, BlockOre.EnumVariant.METRUSITE), 16, 32, 15, 6));
+        ores.add(new WorldGenOre(SpectralProjection.blockOre.getDefaultState().withProperty(BlockOre.VARIANT, BlockOre.EnumVariant.QUARTZ), 16, 32, 4, 15));
     }
 
     @Override

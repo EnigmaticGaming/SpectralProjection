@@ -1,6 +1,6 @@
 package com.eg.SpectralProjection;
 
-import com.eg.SpectralProjection.block.BlockOre;
+import com.eg.SpectralProjection.block.*;
 import com.eg.SpectralProjection.item.*;
 import com.eg.SpectralProjection.proxy.ProxyServer;
 import com.eg.SpectralProjection.recipe.RecipeRegister;
@@ -48,6 +48,10 @@ public class SpectralProjection
 
     //Blocks
     public static Block blockOre;
+    public static Block blockMetal;
+    public static Block blockOuijaBoard;
+    public static Block blockCrystalLatticePylon;
+    public static Block blockPylon;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
@@ -62,6 +66,10 @@ public class SpectralProjection
 
         //Blocks
         blockOre = new BlockOre();
+        blockMetal = new BlockMetal();
+        blockOuijaBoard = new BlockOuijaBoard();
+        blockCrystalLatticePylon = new BlockCrystalLatticePylon();
+        blockPylon = new BlockPylon();
 
         RecipeRegister.preInitialize();
 
@@ -83,6 +91,10 @@ public class SpectralProjection
 
         //Register block renderers
         proxy.registerRenderer(blockOre);
+        proxy.registerRenderer(blockMetal);
+        proxy.registerRenderer(blockOuijaBoard);
+        proxy.registerRenderer(blockCrystalLatticePylon);
+        proxy.registerRenderer(blockPylon);
     }
 
     @EventHandler

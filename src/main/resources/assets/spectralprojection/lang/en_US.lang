@@ -1,12 +1,5 @@
 itemGroup.spectralprojection=Spectral Projection
 
-#Blocks
-#Ores
-tile.ore.soulforrium.name=Soulforrium Ore
-tile.ore.soulattite.name=Soulattite Ore
-tile.ore.metrusite.name=Metrusite Ore
-tile.ore.quartz.name=Quartz Ore
-
 
 #Items
 item.test.name=Test Item
@@ -24,3 +17,26 @@ item.nugget.metrusite.name=Metrusite Nugget
 #Materials
 item.material.metrusitePaste.name=Metrusite Paste
 item.material.quartzShard.name=Quartz Shard
+item.material.purifiedCrystal.name=Purified Crystal
+item.material.attunedCrystal.name=Attuned Crystal
+item.material.soulurgyCore.name=Soulurgy Core
+
+
+#Blocks
+tile.ouijaBoard.name=Ouija Board
+tile.crystalLatticePylon.name=Crystal Lattice Pylon
+
+#Ores
+tile.ore.soulforrium.name=Soulforrium Ore
+tile.ore.soulattite.name=Soulattite Ore
+tile.ore.metrusite.name=Metrusite Ore
+tile.ore.quartz.name=Quartz Ore
+
+#Metal blocks
+tile.blockMetal.soulforrium.name=Soulforrium Block
+tile.blockMetal.soulattite.name=Soulattite Block
+
+#Pylons
+tile.pylon.soulforrium.name=Soulforrium Pylon
+tile.pylon.soulattite.name=Soulattite Pylon
+tile.pylon.soulurgist.name=Soulurgist's Pylon

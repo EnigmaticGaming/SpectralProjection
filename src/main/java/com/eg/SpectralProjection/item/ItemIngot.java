@@ -27,7 +27,6 @@ public class ItemIngot extends ItemBase implements IRenderRegisterHandler {
 
     public static ItemStack soulforrium;
     public static ItemStack soulattite;
-    public static ItemStack metrusite;
 
     public ItemIngot() {
         super("ingot");

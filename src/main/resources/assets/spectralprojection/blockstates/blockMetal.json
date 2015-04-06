@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "variant=soulforrium": { "model": "spectralprojection:blockMetal/soulforrium" },
+    "variant=soulattite": { "model": "spectralprojection:blockMetal/soulattite" }
+  }
+}
