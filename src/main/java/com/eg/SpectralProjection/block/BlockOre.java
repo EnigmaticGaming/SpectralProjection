@@ -200,4 +200,9 @@ public class BlockOre extends Block implements IUnlocalizedNameProvider, IRender
             return values()[meta];
         }
     }
+
+    public static ItemStack getVariant(EnumVariant variant){
+        Block block = SpectralProjection.blockOre;
+        return new ItemStack(block, 1, block.getMetaFromState(block.getDefaultState().withProperty(VARIANT, variant)));
+    }
 }

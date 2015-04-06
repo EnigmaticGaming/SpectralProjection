@@ -20,15 +20,16 @@ public class RecipesCrafting {
     public static void register(){
 
         //Items
-        GameRegistry.addRecipe(ItemMaterial.soulurgyCore, "PDP", "DED", "pDp", 'D', Items.diamond, 'E', Items.emerald, 'P', new ItemStack(SpectralProjection.blockPylon, 1, BlockPylon.EnumVariant.SOULFORRIUM.getMetadata()), 'p', new ItemStack(SpectralProjection.blockPylon, 1, BlockPylon.EnumVariant.SOULATTITE.getMetadata()));
-        GameRegistry.addRecipe(new ItemStack(SpectralProjection.blockPylon, 1, BlockPylon.EnumVariant.SOULURGIST.getMetadata()), "DMD", "MCM", "DMD", 'D', Items.diamond, 'M', ItemMaterial.metrusitePaste, 'C', ItemMaterial.soulurgyCore);
+        GameRegistry.addRecipe(ItemMaterial.soulurgyCore, "PDP", "DED", "pDp", 'D', Items.diamond, 'E', Items.emerald, 'P', BlockPylon.getVariant(BlockPylon.EnumVariant.SOULFORRIUM), 'p', BlockPylon.getVariant(BlockPylon.EnumVariant.SOULATTITE));
+
 
         //Blocks
-        GameRegistry.addRecipe(new ItemStack(SpectralProjection.blockPylon, 1, BlockPylon.EnumVariant.CRYSTALLATTICE.getMetadata()), "CCC", "CPC", "CCC", 'C', Blocks.cobblestone, 'P', ItemMaterial.purifiedCrystal);
+        GameRegistry.addRecipe(BlockPylon.getVariant(BlockPylon.EnumVariant.CRYSTALLATTICE), "CCC", "CPC", "CCC", 'C', Blocks.cobblestone, 'P', ItemMaterial.purifiedCrystal);
+        GameRegistry.addRecipe(BlockPylon.getVariant(BlockPylon.EnumVariant.SOULURGIST), "DMD", "MCM", "DMD", 'D', Items.diamond, 'M', ItemMaterial.metrusitePaste, 'C', ItemMaterial.soulurgyCore);
 
         //Metal blocks
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SpectralProjection.blockMetal, 1, BlockMetal.EnumVariant.SOULFFORIUM.getMetadata()), "III", "III", "III", 'I', "ingotSoulforrium"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SpectralProjection.blockMetal, 1, BlockMetal.EnumVariant.SOULATTITE.getMetadata()), "III", "III", "III", 'I', "ingotSoulattite"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(BlockMetal.getVariant(BlockMetal.EnumVariant.SOULFFORIUM), "III", "III", "III", 'I', "ingotSoulforrium"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(BlockMetal.getVariant(BlockMetal.EnumVariant.SOULATTITE), "III", "III", "III", 'I', "ingotSoulattite"));
 
         //Ingots from metal blocks
         GameRegistry.addRecipe(new ShapelessOreRecipe(ItemUtil.setStackCopyAmount(ItemIngot.soulforrium, 9), "blockSoulforrium"));

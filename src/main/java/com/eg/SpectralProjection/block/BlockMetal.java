@@ -142,4 +142,9 @@ public class BlockMetal extends Block implements IUnlocalizedNameProvider, IRend
             return values()[meta];
         }
     }
+
+    public static ItemStack getVariant(EnumVariant variant){
+        Block block = SpectralProjection.blockMetal;
+        return new ItemStack(block, 1, block.getMetaFromState(block.getDefaultState().withProperty(VARIANT, variant)));
+    }
 }
