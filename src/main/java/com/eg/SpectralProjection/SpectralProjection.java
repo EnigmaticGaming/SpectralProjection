@@ -1,10 +1,13 @@
 package com.eg.SpectralProjection;
 
 import com.eg.SpectralProjection.block.*;
+import com.eg.SpectralProjection.event.EventRegister;
 import com.eg.SpectralProjection.gui.GuiHandler;
 import com.eg.SpectralProjection.item.*;
 import com.eg.SpectralProjection.proxy.ProxyServer;
 import com.eg.SpectralProjection.recipe.RecipeRegister;
+import com.eg.SpectralProjection.util.world.multiblock.MultiblockRegister;
+import com.eg.SpectralProjection.util.world.worldData.WorldDataRegister;
 import com.eg.SpectralProjection.world.WorldGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -81,6 +84,12 @@ public class SpectralProjection
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
+        //Register everything
+        EventRegister.register();
+        WorldDataRegister.register();
+        MultiblockRegister.register();
+
+
         //Register recipes after blocks are initialized
         RecipeRegister.initialize();
 
