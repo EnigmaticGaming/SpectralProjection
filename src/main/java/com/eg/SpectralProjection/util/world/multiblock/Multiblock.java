@@ -21,12 +21,10 @@ public abstract class Multiblock {
     private static Hashtable<String, Class<? extends Multiblock>> registeredMultiblocks = new Hashtable<String, Class<? extends Multiblock>>();
     private static ArrayList<Multiblock> multiblocks = new ArrayList<Multiblock>();
 
-    private static Multiblock newMultiblock(Class<? extends Multiblock> c, BlockPos pos) {
+    private static Multiblock newMultiblock(Class<? extends Multiblock> c) {
         Multiblock multiblock = null;
         try {
-            multiblock = c.getConstructor(BlockPos.class).newInstance(pos);
-        } catch (NoSuchMethodException e) {
-            FMLCommonHandler.instance().raiseException(e, "Registered multiblock:" + c.getCanonicalName() + " does not have ctor(BlockPos)", true);
+            multiblock = c.newInstance();
         } catch (Throwable t) {
             FMLCommonHandler.instance().raiseException(t, "Exception thrown in constructor of " + c.getCanonicalName(), false);
         }
@@ -42,10 +40,10 @@ public abstract class Multiblock {
 
     public static Multiblock tryCreateMultiblock(World world, BlockPos pos) {
         for (Map.Entry<String, Class<? extends Multiblock>> entry : registeredMultiblocks.entrySet()) {
-            Multiblock multiblock = newMultiblock(entry.getValue(), pos);
+            Multiblock multiblock = newMultiblock(entry.getValue());
             multiblock.anchor = multiblock.findAnchor(world, pos);
 
-            if (multiblock != null && multiblock.isActive()) {
+            if (multiblock != null && multiblock.checkStructure()) {
                 multiblocks.add(multiblock);
                 return multiblock;
             }
@@ -85,7 +83,9 @@ public abstract class Multiblock {
                     Multiblock multiblock = multiblocks.get(i);
                     if (multiblock.getAnchor().dimension == blockWorld.provider.getDimensionId() && multiblock.contains(blockPos.pos)) {
                         contained = true;
-                        multiblock.checkStructure();
+                        if(!multiblock.checkStructure() && multiblock.shouldDestroy()){
+                            removeMultiblock(multiblock);
+                        }
                         break;
                     }
                 }
@@ -101,11 +101,11 @@ public abstract class Multiblock {
         String name = nbt.getString(Tags.Name);
 
         if (registeredMultiblocks.containsKey(name)) {
-            BlockPos pos = BlockPos.fromLong(nbt.getLong(Tags.Pos));
-            Multiblock multiblock = newMultiblock(registeredMultiblocks.get(name), pos);
+            Multiblock multiblock = newMultiblock(registeredMultiblocks.get(name));
 
             if (multiblock != null) {
                 multiblock.readFromNBT(nbt);
+                return multiblock;
             }
         }
 
@@ -117,9 +117,7 @@ public abstract class Multiblock {
 
     private boolean active;
 
-    public Multiblock(DimensionBlockPos anchor) {
-        this.anchor = anchor;
-
+    public Multiblock() {
         active = false;
     }
 
@@ -135,11 +133,13 @@ public abstract class Multiblock {
         return DimensionManager.getWorld(anchor.dimension);
     }
 
-    public abstract boolean contains(BlockPos pos);
+    public abstract DimensionBlockPos findAnchor(World world, BlockPos pos);
 
     public abstract boolean checkStructure();
 
-    public abstract DimensionBlockPos findAnchor(World world, BlockPos pos);
+    public abstract boolean contains(BlockPos pos);
+
+    public abstract boolean shouldDestroy();
 
     public abstract void update(World world);
 

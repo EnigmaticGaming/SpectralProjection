@@ -1,6 +1,12 @@
 {
-    "parent":"block/cube_all",
+    "parent": "block/cube",
     "textures": {
-        "all": "spectralprojection:blocks/pylon/crystalLattice/active"
+        "particle": "spectralprojection:blocks/pylon/crystalLattice/active/side",
+        "down": "spectralprojection:blocks/pylon/crystalLattice/active/top",
+        "up": "spectralprojection:blocks/pylon/crystalLattice/active/top",
+        "north": "spectralprojection:blocks/pylon/crystalLattice/active/side",
+        "east": "spectralprojection:blocks/pylon/crystalLattice/active/side",
+        "south": "spectralprojection:blocks/pylon/crystalLattice/active/side",
+        "west": "spectralprojection:blocks/pylon/crystalLattice/active/side"
     }
 }

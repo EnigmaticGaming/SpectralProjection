@@ -14,9 +14,4 @@ public class BlockOuijaBoard extends BlockBase{
     public BlockOuijaBoard() {
         super("ouijaBoard", Material.wood);
     }
-
-    @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ) {
-        return super.onBlockActivated(worldIn, pos, state, playerIn, side, hitX, hitY, hitZ);
-    }
 }

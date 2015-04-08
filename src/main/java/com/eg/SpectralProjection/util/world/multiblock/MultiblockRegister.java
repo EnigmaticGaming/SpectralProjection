@@ -6,6 +6,6 @@ package com.eg.SpectralProjection.util.world.multiblock;
 public class MultiblockRegister {
     public static void register(){
         //Register multiblocks here
-        Multiblock.registerMultiblock("multiblockSpectralContainmentUnit", MultiblockSpectralContainmentUnit.class);
+        Multiblock.registerMultiblock("spectralContainmentUnit", MultiblockSpectralContainmentUnit.class);
     }
 }

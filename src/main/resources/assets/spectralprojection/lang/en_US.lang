@@ -27,6 +27,8 @@ item.material.glassJar.name=Glass Jar
 #Blocks
 tile.ouijaBoard.name=Ouija Board
 tile.crystalLatticePylon.name=Crystal Lattice Pylon
+tile.spectralVent.name=Spectral Vent
+tile.spectralStorage.name=Spectral Storage
 
 #Ores
 tile.ore.soulforrium.name=Soulforrium Ore

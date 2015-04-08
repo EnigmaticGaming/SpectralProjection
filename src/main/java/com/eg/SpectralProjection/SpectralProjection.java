@@ -10,9 +10,6 @@ import com.eg.SpectralProjection.util.world.multiblock.MultiblockRegister;
 import com.eg.SpectralProjection.util.world.worldData.WorldDataRegister;
 import com.eg.SpectralProjection.world.WorldGenerator;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.Mod;
@@ -23,7 +20,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import scala.tools.cmd.Spec;
 
 import java.util.ArrayList;
 
@@ -44,6 +40,7 @@ public class SpectralProjection
     public static CreativeTabs creativeTab;
 
     //Items
+    ArrayList<Item> items;
     public static Item itemTest;
     public static Item itemSoulTag;
 
@@ -53,28 +50,43 @@ public class SpectralProjection
 
 
     //Blocks
+    ArrayList<Block> blocks;
     public static Block blockOre;
     public static Block blockMetal;
     public static Block blockOuijaBoard;
     public static Block blockPylon;
+
+    public static Block blockSpectralVent;
+    public static Block blockSpectralStorage;
+    public static Block blockSpectralDuct;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
         creativeTab = new SpectralProjectionCreativeTab();
 
         //Items
-        itemTest = new ItemTest();
-        itemSoulTag = new ItemSoulTag();
+        items = new ArrayList<Item>();
 
-        itemIngot = new ItemIngot();
-        itemNugget = new ItemNugget();
-        itemMaterial = new ItemMaterial();
+        itemTest = add(new ItemTest());
+        itemSoulTag = add(new ItemSoulTag());
+
+        itemIngot = add(new ItemIngot());
+        itemNugget = add(new ItemNugget());
+        itemMaterial = add(new ItemMaterial());
+
 
         //Blocks
-        blockOre = new BlockOre();
-        blockMetal = new BlockMetal();
-        blockOuijaBoard = new BlockOuijaBoard();
-        blockPylon = new BlockPylon();
+        blocks = new ArrayList<Block>();
+
+        blockOre = add(new BlockOre());
+        blockMetal = add(new BlockMetal());
+        blockOuijaBoard = add(new BlockOuijaBoard());
+        blockPylon = add(new BlockPylon());
+
+        blockSpectralVent = add(new BlockSpectralVent());
+        blockSpectralStorage = add(new BlockSpectralStorage());
+        blockSpectralDuct = add(new BlockSpectralDuct());
+
 
         RecipeRegister.preInitialize();
 
@@ -94,23 +106,29 @@ public class SpectralProjection
         RecipeRegister.initialize();
 
         //Register item renderers
-        proxy.registerRenderer(itemTest);
-        proxy.registerRenderer(itemSoulTag);
-
-        proxy.registerRenderer(itemIngot);
-        proxy.registerRenderer(itemNugget);
-        proxy.registerRenderer(itemMaterial);
-
+        for(int i = 0; i < items.size(); i++){
+            proxy.registerRenderer(items.get(i));
+        }
 
         //Register block renderers
-        proxy.registerRenderer(blockOre);
-        proxy.registerRenderer(blockMetal);
-        proxy.registerRenderer(blockOuijaBoard);
-        proxy.registerRenderer(blockPylon);
+        for(int i = 0; i < blocks.size(); i++){
+            proxy.registerRenderer(blocks.get(i));
+        }
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event){
         RecipeRegister.postInitialize();
+    }
+
+
+    public Item add(Item item){
+        items.add(item);
+        return item;
+    }
+
+    public Block add(Block block){
+        blocks.add(block);
+        return block;
     }
 }
