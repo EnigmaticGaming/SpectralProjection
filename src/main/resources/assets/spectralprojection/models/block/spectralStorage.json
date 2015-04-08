@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "spectralprojection:blocks/spectralStorage/side",
+        "down": "spectralprojection:blocks/spectralStorage/top",
+        "up": "spectralprojection:blocks/spectralStorage/top",
+        "north": "spectralprojection:blocks/spectralStorage/side",
+        "east": "spectralprojection:blocks/spectralStorage/side",
+        "south": "spectralprojection:blocks/spectralStorage/side",
+        "west": "spectralprojection:blocks/spectralStorage/side"
+    }
+}

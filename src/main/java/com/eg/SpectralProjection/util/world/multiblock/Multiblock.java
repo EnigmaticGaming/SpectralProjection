@@ -4,6 +4,7 @@ import com.eg.SpectralProjection.event.handler.HandlerBlock;
 import com.eg.SpectralProjection.util.DimensionBlockPos;
 import com.eg.SpectralProjection.util.nbt.Tags;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
@@ -67,7 +68,7 @@ public abstract class Multiblock {
     public static void updateMultiblocks(World world) {
         for (int i = 0; i < multiblocks.size(); i++) {
             Multiblock multiblock = multiblocks.get(i);
-            if (multiblock.getAnchor().dimension == world.provider.getDimensionId() && world.isBlockLoaded(multiblock.getAnchor().pos)) {
+            if (multiblock.isActive() && multiblock.getAnchor().dimension == world.provider.getDimensionId() && world.isBlockLoaded(multiblock.getAnchor().pos)) {
                 multiblock.update(world);
             }
         }
@@ -92,7 +93,12 @@ public abstract class Multiblock {
             }
 
             if (!contained) {
-                tryCreateMultiblock(blockWorld, blockPos.pos);
+                Multiblock multiblock = tryCreateMultiblock(blockWorld, blockPos.pos);
+
+                /* TODO:
+                 * Assign multiblock to parts
+                 * IMultiblockPart
+                 */
             }
         }
     }

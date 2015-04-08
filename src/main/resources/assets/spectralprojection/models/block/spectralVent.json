@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "spectralprojection:blocks/spectralVent/side",
+        "down": "spectralprojection:blocks/spectralVent/top",
+        "up": "spectralprojection:blocks/spectralVent/top",
+        "north": "spectralprojection:blocks/spectralVent/side",
+        "east": "spectralprojection:blocks/spectralVent/side",
+        "south": "spectralprojection:blocks/spectralVent/side",
+        "west": "spectralprojection:blocks/spectralVent/side"
+    }
+}

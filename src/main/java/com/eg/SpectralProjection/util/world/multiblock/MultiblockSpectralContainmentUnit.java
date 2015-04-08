@@ -2,7 +2,9 @@ package com.eg.SpectralProjection.util.world.multiblock;
 
 import com.eg.SpectralProjection.SpectralProjection;
 import com.eg.SpectralProjection.util.DimensionBlockPos;
+import com.eg.SpectralProjection.util.nbt.Tags;
 import net.minecraft.block.Block;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
@@ -124,5 +126,19 @@ public class MultiblockSpectralContainmentUnit extends Multiblock {
     @Override
     public void update(World world) {
 
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
+
+        compound.setInteger(Tags.Height, height);
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
+
+        height = compound.getInteger(Tags.Height);
     }
 }
