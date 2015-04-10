@@ -9,8 +9,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 /**
  * Created by Creysys on 04 Apr 15.
  */
-public class BlockBase extends Block {
-
+public abstract class BlockBase extends Block {
     public BlockBase(String name, Material material) {
         super(material);
         setCreativeTab(SpectralProjection.creativeTab);

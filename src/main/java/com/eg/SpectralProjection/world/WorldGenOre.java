@@ -25,12 +25,10 @@ public class WorldGenOre {
     }
 
     public void generate(World world, int chunkX, int chunkZ, Random random){
-
         int startX = chunkX * 16;
         int startZ = chunkZ * 16;
 
         for(int i = 0; i < veinsPerChunk; i++) {
-
             int x = startX + random.nextInt(16);
             int z = startZ + random.nextInt(16);
             int y = yStart + random.nextInt(yEnd - yStart);

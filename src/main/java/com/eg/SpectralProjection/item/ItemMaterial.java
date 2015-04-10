@@ -31,6 +31,7 @@ public class ItemMaterial extends ItemBase implements IRenderRegisterHandler {
     public static ItemStack attunedCrystal;
     public static ItemStack soulurgyCore;
     public static ItemStack glassJar;
+    public static ItemStack glyphAnomaly;
 
     public ItemMaterial() {
         super("material");
@@ -50,6 +51,7 @@ public class ItemMaterial extends ItemBase implements IRenderRegisterHandler {
         attunedCrystal = registerMaterial("attunedCrystal");
         soulurgyCore = registerMaterial("soulurgyCore");
         glassJar = registerMaterial("glassJar");
+        glyphAnomaly = registerMaterial("glyphAnomaly");
     }
 
     public ItemStack registerMaterial(String name){

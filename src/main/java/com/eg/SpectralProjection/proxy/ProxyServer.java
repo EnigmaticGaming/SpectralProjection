@@ -9,4 +9,5 @@ import net.minecraft.item.Item;
 public class ProxyServer {
     public void registerRenderer(Item item){}
     public void registerRenderer(Block block){}
+    public void addChatMessage(String msg){}
 }

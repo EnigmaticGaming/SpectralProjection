@@ -1,10 +1,10 @@
 package com.eg.SpectralProjection.util.world.multiblock;
 
+import com.eg.SpectralProjection.SpectralProjection;
 import com.eg.SpectralProjection.event.handler.HandlerBlock;
 import com.eg.SpectralProjection.util.DimensionBlockPos;
 import com.eg.SpectralProjection.util.nbt.Tags;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
@@ -39,30 +39,39 @@ public abstract class Multiblock {
         }
     }
 
-    public static Multiblock tryCreateMultiblock(World world, BlockPos pos) {
+    public static void tryCreateMultiblock(World world, BlockPos pos) {
         for (Map.Entry<String, Class<? extends Multiblock>> entry : registeredMultiblocks.entrySet()) {
             Multiblock multiblock = newMultiblock(entry.getValue());
-            multiblock.anchor = multiblock.findAnchor(world, pos);
 
-            if (multiblock != null && multiblock.checkStructure()) {
-                multiblocks.add(multiblock);
-                return multiblock;
+            if (multiblock != null) {
+                multiblock.anchor = multiblock.findAnchor(world, pos);
+
+                if(getMultiblock(multiblock.anchor.dimension, multiblock.anchor.pos) == null && multiblock.checkStructure()) {
+                    multiblock.active = true;
+                    addMultiblock(multiblock);
+                }
             }
         }
-
-        return null;
     }
 
     public static void addMultiblock(Multiblock multiblock) {
         if (!multiblocks.contains(multiblock)) {
             multiblocks.add(multiblock);
+
+            SpectralProjection.proxy.addChatMessage("Multiblock created! (" + multiblock.getClass().getSimpleName().substring(10) + ")");
         }
     }
 
     public static void removeMultiblock(Multiblock multiblock) {
         if (multiblocks.contains(multiblock)) {
             multiblocks.remove(multiblock);
+
+            SpectralProjection.proxy.addChatMessage("Multiblock destroyed! (" + multiblock.getClass().getSimpleName().substring(10) + ")");
         }
+    }
+
+    public static ArrayList<Multiblock> getMultiblocks() {
+        return multiblocks;
     }
 
     public static void updateMultiblocks(World world) {
@@ -84,7 +93,8 @@ public abstract class Multiblock {
                     Multiblock multiblock = multiblocks.get(i);
                     if (multiblock.getAnchor().dimension == blockWorld.provider.getDimensionId() && multiblock.contains(blockPos.pos)) {
                         contained = true;
-                        if(!multiblock.checkStructure() && multiblock.shouldDestroy()){
+                        multiblock.active = multiblock.checkStructure();
+                        if(!multiblock.active && multiblock.shouldDestroy()){
                             removeMultiblock(multiblock);
                         }
                         break;
@@ -93,14 +103,20 @@ public abstract class Multiblock {
             }
 
             if (!contained) {
-                Multiblock multiblock = tryCreateMultiblock(blockWorld, blockPos.pos);
-
-                /* TODO:
-                 * Assign multiblock to parts
-                 * IMultiblockPart
-                 */
+                tryCreateMultiblock(blockWorld, blockPos.pos);
             }
         }
+    }
+
+    public static Multiblock getMultiblock(int dimension, BlockPos pos){
+        for(int i = 0; i < multiblocks.size(); i++){
+            Multiblock multiblock = multiblocks.get(i);
+            if(multiblock.getAnchor().dimension == dimension && multiblock.contains(pos)){
+                return multiblock;
+            }
+        }
+
+        return null;
     }
 
     public static Multiblock fromNBT(NBTTagCompound nbt) {
@@ -112,6 +128,18 @@ public abstract class Multiblock {
             if (multiblock != null) {
                 multiblock.readFromNBT(nbt);
                 return multiblock;
+            }
+        }
+
+        return null;
+    }
+
+    public static String getMultiblockName(Multiblock multiblock){
+        Class multiblockClass = multiblock.getClass();
+
+        for(Map.Entry<String, Class<? extends Multiblock>> entry : registeredMultiblocks.entrySet()){
+            if(entry.getValue() == multiblockClass){
+                return entry.getKey();
             }
         }
 
@@ -155,6 +183,15 @@ public abstract class Multiblock {
     }
 
     public void writeToNBT(NBTTagCompound compound) {
+        String name = getMultiblockName(this);
+
+        if(name == null){
+            FMLCommonHandler.instance().raiseException(new NullPointerException(), "Multiblock not registered!", true);
+        }
+
+        compound.setString(Tags.Name, name);
+
+
         anchor.writeToNBT(compound, Tags.Pos);
         compound.setBoolean(Tags.Active, isActive());
     }

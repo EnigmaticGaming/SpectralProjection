@@ -1,6 +1,7 @@
 package com.eg.SpectralProjection;
 
 import com.eg.SpectralProjection.block.*;
+import com.eg.SpectralProjection.entity.EntityShadowMan;
 import com.eg.SpectralProjection.event.EventRegister;
 import com.eg.SpectralProjection.gui.GuiHandler;
 import com.eg.SpectralProjection.item.*;
@@ -11,6 +12,7 @@ import com.eg.SpectralProjection.util.world.worldData.WorldDataRegister;
 import com.eg.SpectralProjection.world.WorldGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -19,6 +21,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.ArrayList;
@@ -32,7 +35,7 @@ public class SpectralProjection
     public static final String VERSION = "1.0";
 
     @Mod.Instance(SpectralProjection.MODID)
-    public SpectralProjection instance;
+    public static SpectralProjection instance;
 
     @SidedProxy(modId = SpectralProjection.MODID, serverSide = "com.eg.SpectralProjection.proxy.ProxyServer", clientSide = "com.eg.SpectralProjection.proxy.ProxyClient")
     public static ProxyServer proxy;
@@ -56,9 +59,12 @@ public class SpectralProjection
     public static Block blockOuijaBoard;
     public static Block blockPylon;
 
+    public static Block blockSpectralPump;
     public static Block blockSpectralVent;
     public static Block blockSpectralStorage;
     public static Block blockSpectralDuct;
+
+    public static Block blockGlyphRune;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
@@ -83,9 +89,16 @@ public class SpectralProjection
         blockOuijaBoard = add(new BlockOuijaBoard());
         blockPylon = add(new BlockPylon());
 
+        blockSpectralPump = add(new BlockSpectralPump());
         blockSpectralVent = add(new BlockSpectralVent());
         blockSpectralStorage = add(new BlockSpectralStorage());
         blockSpectralDuct = add(new BlockSpectralDuct());
+
+        blockGlyphRune = add(new BlockGlyphRune());
+
+
+        //Entities
+        add(EntityShadowMan.class, "shadowMan");
 
 
         RecipeRegister.preInitialize();
@@ -130,5 +143,9 @@ public class SpectralProjection
     public Block add(Block block){
         blocks.add(block);
         return block;
+    }
+
+    public void add(Class<? extends Entity> c, String name){
+        EntityRegistry.registerGlobalEntityID(c, name, EntityRegistry.findGlobalUniqueEntityId());
     }
 }

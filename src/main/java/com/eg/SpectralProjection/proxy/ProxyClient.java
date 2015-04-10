@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.util.ChatComponentText;
 
 /**
  * Created by Creysys on 04 Apr 15.
@@ -29,5 +30,10 @@ public class ProxyClient extends ProxyServer {
         } else {
             RenderRegister.register(block, 0, block.getUnlocalizedName().substring(5));
         }
+    }
+
+    @Override
+    public void addChatMessage(String msg) {
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(msg));
     }
 }

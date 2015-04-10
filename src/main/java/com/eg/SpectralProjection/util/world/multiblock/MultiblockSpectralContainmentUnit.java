@@ -114,7 +114,7 @@ public class MultiblockSpectralContainmentUnit extends Multiblock {
                     Block block = world.getBlockState(pos).getBlock();
 
                     if(structure[xOffset][zOffset] == block){
-                        return false;
+                        return true;
                     }
                 }
             }
