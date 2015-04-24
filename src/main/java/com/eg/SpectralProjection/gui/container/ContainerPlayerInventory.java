@@ -21,9 +21,4 @@ public abstract class ContainerPlayerInventory extends ContainerBase {
             }
         }
     }
-
-    @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
-        return true;
-    }
 }

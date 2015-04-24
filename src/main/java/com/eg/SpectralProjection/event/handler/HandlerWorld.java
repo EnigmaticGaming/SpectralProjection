@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  */
 public class HandlerWorld {
     @SubscribeEvent
-    public void onWorldLoad(WorldEvent.Load event){
+    public void onWorldLoad(WorldEvent.Load event) {
         WorldData.load(event.world);
     }
 }

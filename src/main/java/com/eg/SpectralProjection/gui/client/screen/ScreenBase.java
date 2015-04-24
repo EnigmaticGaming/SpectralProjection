@@ -3,12 +3,15 @@ package com.eg.SpectralProjection.gui.client.screen;
 import com.eg.SpectralProjection.SpectralProjection;
 import com.eg.SpectralProjection.gui.container.ContainerBase;
 import com.eg.SpectralProjection.util.client.RenderUtil;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 /**
  * Created by Creysys on 10 Apr 15.
@@ -56,23 +59,37 @@ public abstract class ScreenBase extends GuiContainer {
         fontRendererObj.drawString(title, titleX, titleY, 4210752);
     }
 
-    public World getWorld(){
+    @Override
+    public void drawHoveringText(List textLines, int x, int y, FontRenderer font) {
+        super.drawHoveringText(textLines, x, y, font);
+    }
+
+    public World getWorld() {
         return container.world;
     }
 
-    public EntityPlayer getPlayer(){
+    public EntityPlayer getPlayer() {
         return container.player;
     }
 
-    public int getX(){
+    public int getLeft() {
+        return guiLeft;
+    }
+
+    public int getTop() {
+        return guiTop;
+    }
+
+
+    public int getX() {
         return container.x;
     }
 
-    public int getY(){
+    public int getY() {
         return container.y;
     }
 
-    public int getZ(){
+    public int getZ() {
         return container.z;
     }
 

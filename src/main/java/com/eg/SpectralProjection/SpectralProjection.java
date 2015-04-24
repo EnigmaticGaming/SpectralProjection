@@ -1,5 +1,7 @@
 package com.eg.SpectralProjection;
 
+import com.eg.SpectralProjection.achievement.AchievementPageMagic;
+import com.eg.SpectralProjection.api.essence.Essences;
 import com.eg.SpectralProjection.block.*;
 import com.eg.SpectralProjection.entity.EntityShadowMan;
 import com.eg.SpectralProjection.event.EventRegister;
@@ -14,6 +16,7 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
+import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -66,9 +69,18 @@ public class SpectralProjection
 
     public static Block blockGlyphRune;
 
+    public static Block blockSoulforriumFurnace;
+
+
+    //Achievement Pages
+    public static AchievementPage achievementPageMagic;
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
         creativeTab = new SpectralProjectionCreativeTab();
+
+        //Essences
+        Essences.registerEssences();
 
         //Items
         items = new ArrayList<Item>();
@@ -96,10 +108,14 @@ public class SpectralProjection
 
         blockGlyphRune = add(new BlockGlyphRune());
 
+        blockSoulforriumFurnace = add(new BlockSoulforriumFurnace());
 
         //Entities
         add(EntityShadowMan.class, "shadowMan");
 
+
+        //Achievemnt Pages
+        achievementPageMagic = new AchievementPageMagic();
 
         RecipeRegister.preInitialize();
 

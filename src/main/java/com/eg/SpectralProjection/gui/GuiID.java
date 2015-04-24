@@ -5,5 +5,6 @@ package com.eg.SpectralProjection.gui;
  */
 public enum GuiID {
     OUIJABOARD,
-    SpectralContainmentUnit,
+    SPECTRAL_CONTAINMENT_UNIT,
+    SOULFORRIUM_FURNACE
 }

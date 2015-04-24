@@ -31,9 +31,4 @@ public class ProxyClient extends ProxyServer {
             RenderRegister.register(block, 0, block.getUnlocalizedName().substring(5));
         }
     }
-
-    @Override
-    public void addChatMessage(String msg) {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(msg));
-    }
 }

@@ -1,16 +1,14 @@
 package com.eg.SpectralProjection.gui;
 
 import com.eg.SpectralProjection.gui.client.screen.ScreenOuijaBoard;
+import com.eg.SpectralProjection.gui.client.screen.ScreenSoulforriumFurnace;
 import com.eg.SpectralProjection.gui.client.screen.ScreenSpectralContainmentUnit;
 import com.eg.SpectralProjection.gui.container.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Hashtable;
 
 /**
@@ -22,7 +20,8 @@ public class GuiHandler implements IGuiHandler {
     static {
         guis = new Hashtable<GuiID, Class[]>();
         guis.put(GuiID.OUIJABOARD, new Class[]{ContainerOuijaBoard.class, ScreenOuijaBoard.class});
-        guis.put(GuiID.SpectralContainmentUnit, new Class[]{ContainerSpectralContainmentUnit.class, ScreenSpectralContainmentUnit.class});
+        guis.put(GuiID.SPECTRAL_CONTAINMENT_UNIT, new Class[]{ContainerSpectralContainmentUnit.class, ScreenSpectralContainmentUnit.class});
+        guis.put(GuiID.SOULFORRIUM_FURNACE, new Class[]{ContainerSoulforriumFurnace.class, ScreenSoulforriumFurnace.class});
     }
 
 

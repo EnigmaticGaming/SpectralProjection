@@ -4,7 +4,10 @@ import com.eg.SpectralProjection.SpectralProjection;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.WorldServerMulti;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.util.ArrayList;
 
@@ -22,39 +25,37 @@ public abstract class WorldData extends WorldSavedData {
     }
 
     public static void load(World world) {
-        if (world.isRemote) {
+        if (world.isRemote || world instanceof WorldServerMulti) {
             return;
         }
 
         for (int i = 0; i < worldDataClasses.size(); i++) {
-            WorldData worldData = null;
+            WorldData worldData;
 
             try {
-                worldData = worldDataClasses.get(i).newInstance();
+                worldData = worldDataClasses.get(i).getConstructor(String.class).newInstance((String) null);
             } catch (Throwable t) {
-                FMLCommonHandler.instance().raiseException(t, "Exception thrown in constructor of " + worldDataClasses.get(i).getCanonicalName(), true);
+                FMLCommonHandler.instance().raiseException(t, "Exception thrown in constructor of " + worldDataClasses.get(i).getCanonicalName(), false);
+                continue;
             }
 
 
-            if (worldData != null) {
-                WorldData existing = (WorldData) world.getPerWorldStorage().loadData(worldDataClasses.get(i), worldData.mapName);
+            WorldData existing = (WorldData) world.getPerWorldStorage().loadData(worldDataClasses.get(i), worldData.mapName);
 
-                if (existing == null) {
-                    worldData.setInstance(worldData);
-                    world.getPerWorldStorage().setData(worldData.mapName, worldData);
-                } else {
-                    worldData.setInstance(existing);
-                }
-
+            if (existing == null) {
+                worldData.setInstance(worldData);
+                world.getPerWorldStorage().setData(worldData.mapName, worldData);
             }
         }
     }
 
 
-
+    @SuppressWarnings("unused")
     public WorldData(String name) {
-        super(SpectralProjection.MODID + "." + name);
+        super(null);
+        ReflectionHelper.setPrivateValue(WorldSavedData.class, this, SpectralProjection.modid + "-" + getMapName(), "mapName");
     }
 
+    public abstract String getMapName();
     public abstract void setInstance(WorldData worldData);
 }

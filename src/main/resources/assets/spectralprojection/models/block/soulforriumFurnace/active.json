@@ -1,0 +1,9 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "top": "spectralprojection:blocks/soulforriumFurnace/top",
+        "front": "spectralprojection:blocks/soulforriumFurnace/frontOn",
+        "side": "spectralprojection:blocks/soulforriumFurnace/side",
+		"down": "spectralprojection:blocks/soulforriumFurnace/bottom"
+    }
+}

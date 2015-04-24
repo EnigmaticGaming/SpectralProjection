@@ -28,7 +28,7 @@ public class BlockSpectralVent extends BlockBase {
         Multiblock multiblock = Multiblock.getMultiblock(world.provider.getDimensionId(), pos);
 
         if(multiblock instanceof MultiblockSpectralContainmentUnit && multiblock.isActive()){
-            player.openGui(SpectralProjection.instance, GuiID.SpectralContainmentUnit.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+            player.openGui(SpectralProjection.instance, GuiID.SPECTRAL_CONTAINMENT_UNIT.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             return true;
         }
 

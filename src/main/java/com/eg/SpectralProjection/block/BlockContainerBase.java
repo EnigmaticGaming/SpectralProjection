@@ -18,11 +18,6 @@ public abstract class BlockContainerBase extends BlockBase implements ITileEntit
         this.isBlockContainer = true;
     }
 
-    public int getRenderType()
-    {
-        return -1;
-    }
-
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
     {
         super.breakBlock(worldIn, pos, state);
@@ -33,6 +28,6 @@ public abstract class BlockContainerBase extends BlockBase implements ITileEntit
     {
         super.onBlockEventReceived(worldIn, pos, state, eventID, eventParam);
         TileEntity tileentity = worldIn.getTileEntity(pos);
-        return tileentity == null ? false : tileentity.receiveClientEvent(eventID, eventParam);
+        return tileentity != null && tileentity.receiveClientEvent(eventID, eventParam);
     }
 }

@@ -49,18 +49,30 @@ public class MultiblockSpectralContainmentUnit extends Multiblock {
     public DimensionBlockPos findAnchor(World world, BlockPos pos) {
 
         int anchorY = pos.getY();
-        while(allowedBlocks.contains(world.getBlockState(new BlockPos(pos.getX(), anchorY - 1, pos.getZ())).getBlock()) && pos.getY() - anchorY < maxHeight){
+        BlockPos p = new BlockPos(pos.getX(), anchorY - 1, pos.getZ());
+        Multiblock multiblock = Multiblock.getMultiblock(world.provider.getDimensionId(), p);
+        while(allowedBlocks.contains(world.getBlockState(p).getBlock()) && pos.getY() - anchorY < maxHeight && (multiblock == null || multiblock == this)){
             anchorY--;
+            p = new BlockPos(pos.getX(), anchorY - 1, pos.getZ());
+            multiblock = Multiblock.getMultiblock(world.provider.getDimensionId(), p);
         }
 
         int anchorX = pos.getX();
-        while(allowedBlocks.contains(world.getBlockState(new BlockPos(anchorX - 1, anchorY, pos.getZ())).getBlock()) && pos.getX() - anchorX < maxLength){
+        p = new BlockPos(anchorX - 1, anchorY, pos.getZ());
+        multiblock = Multiblock.getMultiblock(world.provider.getDimensionId(), p);
+        while(allowedBlocks.contains(world.getBlockState(p).getBlock()) && pos.getX() - anchorX < maxLength && (multiblock == null || multiblock == this)){
             anchorX--;
+            p = new BlockPos(anchorX - 1, anchorY, pos.getZ());
+            multiblock = Multiblock.getMultiblock(world.provider.getDimensionId(), p);
         }
 
         int anchorZ = pos.getZ();
-        while(allowedBlocks.contains(world.getBlockState(new BlockPos(anchorX, anchorY, anchorZ - 1)).getBlock()) && pos.getZ() - anchorZ < maxLength){
+        p = new BlockPos(anchorX, anchorY, anchorZ - 1);
+        multiblock = Multiblock.getMultiblock(world.provider.getDimensionId(), p);
+        while(allowedBlocks.contains(world.getBlockState(p).getBlock()) && pos.getZ() - anchorZ < maxLength && (multiblock == null || multiblock == this)){
             anchorZ--;
+            p = new BlockPos(anchorX, anchorY, anchorZ - 1);
+            multiblock = Multiblock.getMultiblock(world.provider.getDimensionId(), p);
         }
 
         return new DimensionBlockPos(world.provider.getDimensionId(), new BlockPos(anchorX, anchorY, anchorZ));
@@ -76,15 +88,11 @@ public class MultiblockSpectralContainmentUnit extends Multiblock {
                 for (int zOffset = 0; zOffset < maxLength; zOffset++) {
                     BlockPos pos = new BlockPos(anchor.pos.getX() + xOffset, anchor.pos.getY() + yOffset, anchor.pos.getZ() + zOffset);
                     Block block = world.getBlockState(pos).getBlock();
+                    Multiblock multiblock = Multiblock.getMultiblock(world.provider.getDimensionId(), pos);
 
-                    if(structure[xOffset][zOffset] != block){
+                    if(structure[xOffset][zOffset] != block || (multiblock != null && multiblock != this)){
                         height = yOffset + 1;
-                        if(height >= minHeight + 1){
-                            return true;
-                        }
-                        else {
-                            return false;
-                        }
+                        return height >= minHeight + 1;
                     }
                 }
             }
@@ -114,7 +122,7 @@ public class MultiblockSpectralContainmentUnit extends Multiblock {
                     Block block = world.getBlockState(pos).getBlock();
 
                     if(structure[xOffset][zOffset] == block){
-                        return true;
+                        return false;
                     }
                 }
             }

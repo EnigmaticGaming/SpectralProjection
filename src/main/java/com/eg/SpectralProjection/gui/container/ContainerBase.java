@@ -24,4 +24,9 @@ public abstract class ContainerBase extends Container {
         this.y = y;
         this.z = z;
     }
+
+    @Override
+    public boolean canInteractWith(EntityPlayer playerIn) {
+        return true;
+    }
 }

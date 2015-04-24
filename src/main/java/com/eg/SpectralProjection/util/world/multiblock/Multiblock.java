@@ -4,6 +4,7 @@ import com.eg.SpectralProjection.SpectralProjection;
 import com.eg.SpectralProjection.event.handler.HandlerBlock;
 import com.eg.SpectralProjection.util.DimensionBlockPos;
 import com.eg.SpectralProjection.util.nbt.Tags;
+import com.eg.SpectralProjection.util.world.worldData.WorldDataMultiblock;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
@@ -19,8 +20,7 @@ import java.util.Map;
  */
 public abstract class Multiblock {
 
-    private static Hashtable<String, Class<? extends Multiblock>> registeredMultiblocks = new Hashtable<String, Class<? extends Multiblock>>();
-    private static ArrayList<Multiblock> multiblocks = new ArrayList<Multiblock>();
+    public static Hashtable<String, Class<? extends Multiblock>> registeredMultiblocks = new Hashtable<String, Class<? extends Multiblock>>();
 
     private static Multiblock newMultiblock(Class<? extends Multiblock> c) {
         Multiblock multiblock = null;
@@ -55,28 +55,30 @@ public abstract class Multiblock {
     }
 
     public static void addMultiblock(Multiblock multiblock) {
-        if (!multiblocks.contains(multiblock)) {
-            multiblocks.add(multiblock);
-
-            SpectralProjection.proxy.addChatMessage("Multiblock created! (" + multiblock.getClass().getSimpleName().substring(10) + ")");
+        if (!getMultiblocks().contains(multiblock)) {
+            getMultiblocks().add(multiblock);
         }
     }
 
     public static void removeMultiblock(Multiblock multiblock) {
-        if (multiblocks.contains(multiblock)) {
-            multiblocks.remove(multiblock);
-
-            SpectralProjection.proxy.addChatMessage("Multiblock destroyed! (" + multiblock.getClass().getSimpleName().substring(10) + ")");
+        if (getMultiblocks().contains(multiblock)) {
+            getMultiblocks().remove(multiblock);
         }
     }
 
     public static ArrayList<Multiblock> getMultiblocks() {
-        return multiblocks;
+        return WorldDataMultiblock.instance.multiblocks;
     }
 
     public static void updateMultiblocks(World world) {
-        for (int i = 0; i < multiblocks.size(); i++) {
-            Multiblock multiblock = multiblocks.get(i);
+
+        if(world.isRemote){
+            return;
+        }
+
+
+        for (int i = 0; i < getMultiblocks().size(); i++) {
+            Multiblock multiblock = getMultiblocks().get(i);
             if (multiblock.isActive() && multiblock.getAnchor().dimension == world.provider.getDimensionId() && world.isBlockLoaded(multiblock.getAnchor().pos)) {
                 multiblock.update(world);
             }
@@ -89,8 +91,8 @@ public abstract class Multiblock {
 
             boolean contained = false;
             if (blockWorld != null && blockWorld.isBlockLoaded(blockPos.pos)) {
-                for (int j = 0; j < multiblocks.size(); j++) {
-                    Multiblock multiblock = multiblocks.get(i);
+                for (int j = 0; j < getMultiblocks().size(); j++) {
+                    Multiblock multiblock = getMultiblocks().get(i);
                     if (multiblock.getAnchor().dimension == blockWorld.provider.getDimensionId() && multiblock.contains(blockPos.pos)) {
                         contained = true;
                         multiblock.active = multiblock.checkStructure();
@@ -109,8 +111,8 @@ public abstract class Multiblock {
     }
 
     public static Multiblock getMultiblock(int dimension, BlockPos pos){
-        for(int i = 0; i < multiblocks.size(); i++){
-            Multiblock multiblock = multiblocks.get(i);
+        for(int i = 0; i < getMultiblocks().size(); i++){
+            Multiblock multiblock = getMultiblocks().get(i);
             if(multiblock.getAnchor().dimension == dimension && multiblock.contains(pos)){
                 return multiblock;
             }

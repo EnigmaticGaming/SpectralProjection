@@ -10,6 +10,4 @@ public class EntityShadowMan extends EntityMob {
     public EntityShadowMan(World world) {
         super(world);
     }
-
-
 }
