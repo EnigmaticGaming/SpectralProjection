@@ -1,5 +1,6 @@
 package com.eg.SpectralProjection.gui.client.screen;
 
+import com.eg.SpectralProjection.api.essence.Essences;
 import com.eg.SpectralProjection.gui.container.ContainerBase;
 import com.eg.SpectralProjection.util.client.GuiUtil;
 
@@ -18,11 +19,11 @@ public class ScreenSpectralContainmentUnit extends ScreenBase {
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 
-        GuiUtil.drawTooltip("Greed", 8, 63, 16, 16, mouseX, mouseY, this);
-        GuiUtil.drawTooltip("Corruption", 44, 63, 16, 16, mouseX, mouseY, this);
-        GuiUtil.drawTooltip("Unmatter", 80, 63, 16, 16, mouseX, mouseY, this);
-        GuiUtil.drawTooltip("Pure Soul", 116, 63, 16, 16, mouseX, mouseY, this);
-        GuiUtil.drawTooltip("Ethreal", 152, 63, 16, 16, mouseX, mouseY, this);
+        GuiUtil.drawTooltip(Essences.greed.getLocalizedName(), 8, 63, 16, 16, mouseX, mouseY, this);
+        GuiUtil.drawTooltip(Essences.corruption.getLocalizedName(), 44, 63, 16, 16, mouseX, mouseY, this);
+        GuiUtil.drawTooltip(Essences.unmatter.getLocalizedName(), 80, 63, 16, 16, mouseX, mouseY, this);
+        GuiUtil.drawTooltip(Essences.pureSoul.getLocalizedName(), 116, 63, 16, 16, mouseX, mouseY, this);
+        GuiUtil.drawTooltip(Essences.ethreal.getLocalizedName(), 152, 63, 16, 16, mouseX, mouseY, this);
     }
 
     @Override

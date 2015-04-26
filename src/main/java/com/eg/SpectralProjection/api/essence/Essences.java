@@ -38,4 +38,8 @@ public class Essences
 
         return essence;
     }
+
+    public static ArrayList<Essence> getRegisteredEssences(){
+        return registeredEssences;
+    }
 }

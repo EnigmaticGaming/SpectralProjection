@@ -32,4 +32,9 @@ public class EssenceStack {
 
         return new EssenceStack(essence, amount);
     }
+
+    @Override
+    public String toString() {
+        return amount + " x " + essence.getLocalizedName();
+    }
 }

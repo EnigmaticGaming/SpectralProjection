@@ -54,6 +54,8 @@ public class SpectralProjection
     public static Item itemNugget;
     public static Item itemMaterial;
 
+    public static Item itemEssencemeter;
+
 
     //Blocks
     ArrayList<Block> blocks;
@@ -92,6 +94,7 @@ public class SpectralProjection
         itemNugget = add(new ItemNugget());
         itemMaterial = add(new ItemMaterial());
 
+        itemEssencemeter = add(new ItemEssencemeter());
 
         //Blocks
         blocks = new ArrayList<Block>();
