@@ -14,4 +14,11 @@ public class ScreenSoulforriumFurnace extends ScreenBase {
     public String getUnlocalizedName() {
         return "soulforriumFurnace";
     }
+
+    @Override
+    public void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+        super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+
+
+    }
 }

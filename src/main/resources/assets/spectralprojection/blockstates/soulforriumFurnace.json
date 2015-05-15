@@ -1,13 +1,13 @@
 {
     "variants": {
-        "active=false,facing=north": { "model": "soulforriumFurnace/inactive" },
-        "active=false,facing=south": { "model": "soulforriumFurnace/inactive", "y": 180 },
-        "active=false,facing=west":  { "model": "soulforriumFurnace/inactive", "y": 270 },
-        "active=false,facing=east":  { "model": "soulforriumFurnace/inactive", "y": 90 },
+        "active=false,facing=north": { "model": "spectralprojection:soulforriumFurnace/inactive" },
+        "active=false,facing=south": { "model": "spectralprojection:soulforriumFurnace/inactive", "y": 180 },
+        "active=false,facing=west":  { "model": "spectralprojection:soulforriumFurnace/inactive", "y": 270 },
+        "active=false,facing=east":  { "model": "spectralprojection:soulforriumFurnace/inactive", "y": 90 },
 		
-		"active=true,facing=north": { "model": "soulforriumFurnace/active" },
-        "active=true,facing=south": { "model": "soulforriumFurnace/active", "y": 180 },
-        "active=true,facing=west":  { "model": "soulforriumFurnace/active", "y": 270 },
-        "active=true,facing=east":  { "model": "soulforriumFurnace/active", "y": 90 }
+		"active=true,facing=north": { "model": "spectralprojection:soulforriumFurnace/active" },
+        "active=true,facing=south": { "model": "spectralprojection:soulforriumFurnace/active", "y": 180 },
+        "active=true,facing=west":  { "model": "spectralprojection:soulforriumFurnace/active", "y": 270 },
+        "active=true,facing=east":  { "model": "spectralprojection:soulforriumFurnace/active", "y": 90 }
     }
 }

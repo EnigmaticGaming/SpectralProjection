@@ -6,7 +6,7 @@ import com.eg.SpectralProjection.item.ItemMaterial;
 import com.eg.SpectralProjection.util.client.IRenderRegisterHandler;
 import com.eg.SpectralProjection.util.IUnlocalizedNameProvider;
 import com.eg.SpectralProjection.util.client.RenderRegister;
-import com.eg.SpectralProjection.util.item.ItemUtil;
+import com.eg.SpectralProjection.util.helper.ItemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;

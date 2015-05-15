@@ -1,6 +1,6 @@
 package com.eg.SpectralProjection.gui.container;
 
-import com.eg.SpectralProjection.util.item.ItemUtil;
+import com.eg.SpectralProjection.util.helper.ItemUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -10,8 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
 
 /**
  * Created by Creysys on 06 Apr 15.

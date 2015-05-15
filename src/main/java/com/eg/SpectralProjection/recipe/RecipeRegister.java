@@ -1,5 +1,7 @@
 package com.eg.SpectralProjection.recipe;
 
+import com.eg.SpectralProjection.api.recipe.RecipeManager;
+
 /**
  * Created by Creysys on 05 Apr 15.
  */
@@ -13,6 +15,8 @@ public class RecipeRegister {
 
         RecipesSmelting.register();
         RecipesCrafting.register();
+
+        RecipeManager.register();
     }
 
     public static void postInitialize(){

@@ -11,4 +11,11 @@ public class Tags {
     public static String Dimension = "spDimension";
     public static String Height = "spHeight";
     public static String Amount = "spAmount";
+    public static String Inventory = "spInventory";
+    public static String Essence = "spEssence";
+    public static String Buffer = "spBuffer";
+    public static String BurnTime = "spBurnTime";
+    public static String TotalBurnTime = "spTotalBurnTime";
+    public static String CraftTime = "spCraftTime";
+    public static String CraftOutput = "spCraftOutput";
 }

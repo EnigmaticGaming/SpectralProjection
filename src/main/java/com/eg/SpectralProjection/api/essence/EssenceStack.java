@@ -15,6 +15,10 @@ public class EssenceStack {
         this.amount = amount;
     }
 
+    public EssenceStack copy(){
+        return new EssenceStack(essence, amount);
+    }
+
     public void writeToNBT(String key, NBTTagCompound compound){
         NBTTagCompound c = new NBTTagCompound();
 
@@ -25,10 +29,16 @@ public class EssenceStack {
     }
 
     public static EssenceStack readFromNBT(String key, NBTTagCompound compound){
-        NBTTagCompound c = compound.getCompoundTag(key);
+        return readFromNBT(compound.getCompoundTag(key));
+    }
 
-        Essence essence = Essences.getEssence(c.getString(Tags.Name));
-        int amount = c.getInteger(Tags.Amount);
+    public static EssenceStack readFromNBT(NBTTagCompound compound){
+        Essence essence = Essences.getEssence(compound.getString(Tags.Name));
+        if(essence == null){
+            return null;
+        }
+
+        int amount = compound.getInteger(Tags.Amount);
 
         return new EssenceStack(essence, amount);
     }

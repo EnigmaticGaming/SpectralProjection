@@ -6,13 +6,11 @@ import com.eg.SpectralProjection.block.BlockPylon;
 import com.eg.SpectralProjection.item.ItemIngot;
 import com.eg.SpectralProjection.item.ItemMaterial;
 import com.eg.SpectralProjection.item.ItemNugget;
-import com.eg.SpectralProjection.util.item.ItemUtil;
+import com.eg.SpectralProjection.util.helper.ItemUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 /**
  * Created by Creysys on 06 Apr 15.

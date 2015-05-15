@@ -1,5 +1,5 @@
 {
-    "parent": "spectralprojection:block/soulforriumFurnace",
+    "parent": "spectralprojection:block/soulforriumFurnace/inactive",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],
