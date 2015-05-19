@@ -2,7 +2,7 @@ package com.eg.SpectralProjection.block;
 
 import com.eg.SpectralProjection.SpectralProjection;
 import com.eg.SpectralProjection.gui.GuiID;
-import com.eg.SpectralProjection.tileEntity.TileEntitySoulforriumFurnace;
+import com.eg.SpectralProjection.tileEntity.TESoulforriumFurnace;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
@@ -28,14 +28,14 @@ public class BlockSoulforriumFurnace extends BlockContainerBase
     public BlockSoulforriumFurnace() {
         super("soulforriumFurnace", Material.iron);
 
-        GameRegistry.registerTileEntity(TileEntitySoulforriumFurnace.class, "tileEntitySoulforriumFurnace");
+        GameRegistry.registerTileEntity(TESoulforriumFurnace.class, "tileEntitySoulforriumFurnace");
 
         setDefaultState(getDefaultState().withProperty(ACTIVE, false));
     }
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
-        return new TileEntitySoulforriumFurnace();
+        return new TESoulforriumFurnace();
     }
 
     @Override

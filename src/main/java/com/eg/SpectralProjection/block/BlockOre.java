@@ -4,7 +4,7 @@ import com.eg.SpectralProjection.SpectralProjection;
 import com.eg.SpectralProjection.item.ItemBlockMeta;
 import com.eg.SpectralProjection.item.ItemMaterial;
 import com.eg.SpectralProjection.util.client.IRenderRegisterHandler;
-import com.eg.SpectralProjection.util.IUnlocalizedNameProvider;
+import com.eg.SpectralProjection.util.interfaces.IUnlocalizedNameProvider;
 import com.eg.SpectralProjection.util.client.RenderRegister;
 import com.eg.SpectralProjection.util.helper.ItemUtil;
 import net.minecraft.block.Block;

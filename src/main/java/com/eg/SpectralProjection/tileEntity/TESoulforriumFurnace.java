@@ -7,9 +7,12 @@ import com.eg.SpectralProjection.api.recipe.RecipeManager;
 import com.eg.SpectralProjection.api.recipe.RecipeSoulforriumFurnace;
 import com.eg.SpectralProjection.api.recipe.RecipeSoulforriumFurnaceMetrusite;
 import com.eg.SpectralProjection.block.BlockSoulforriumFurnace;
+import com.eg.SpectralProjection.net.SPNet;
+import com.eg.SpectralProjection.net.packet.PacketTESync;
 import com.eg.SpectralProjection.util.helper.EssenceUtil;
 import com.eg.SpectralProjection.util.helper.ItemUtil;
 import com.eg.SpectralProjection.util.helper.NBTUtil;
+import com.eg.SpectralProjection.util.interfaces.ITESyncHandler;
 import com.eg.SpectralProjection.util.nbt.Tags;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,25 +27,29 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import scala.Int;
+
+import java.util.InputMismatchException;
 
 /**
  * Created by Creysys on 19 Apr 15.
  */
-public class TileEntitySoulforriumFurnace extends TileEntity implements IEssenceHandler, IUpdatePlayerListBox, ISidedInventory {
+public class TESoulforriumFurnace extends TEBase implements IEssenceHandler, ITESyncHandler, IUpdatePlayerListBox, ISidedInventory {
 
-    private final int ESSENCE_CAPACITY = 100;
+    public final int ESSENCE_CAPACITY = 100;
 
-    private ItemStack[] slots;
-    private EssenceStack essenceStack;
-    private EssenceStack essenceBuffer;
+    public ItemStack[] slots;
+    public EssenceStack essenceStack;
+    public EssenceStack essenceBuffer;
 
-    private int burningTime;
-    private int totalBurningTime;
+    public int burningTime;
+    public int totalBurningTime;
 
     private Object craftingOutput;
     private int craftingTime;
 
-    public TileEntitySoulforriumFurnace(){
+    public TESoulforriumFurnace(){
         slots = new ItemStack[getSizeInventory()];
 
         burningTime = 0;
@@ -84,6 +91,59 @@ public class TileEntitySoulforriumFurnace extends TileEntity implements IEssence
     }
 
     @Override
+    public void writeCustomNBT(NBTTagCompound compound) {
+        NBTUtil.writeInventory(slots, compound);
+
+        if(essenceStack != null) {
+            essenceStack.writeToNBT(Tags.Essence, compound);
+        }
+
+        if(essenceBuffer != null) {
+            essenceBuffer.writeToNBT(Tags.Buffer, compound);
+        }
+
+        compound.setInteger(Tags.BurnTime, burningTime);
+        compound.setInteger(Tags.TotalBurnTime, totalBurningTime);
+        compound.setInteger(Tags.CraftTime, craftingTime);
+
+        if(craftingOutput instanceof ItemStack){
+            NBTTagCompound inner = new NBTTagCompound();
+            ((ItemStack) craftingOutput).writeToNBT(inner);
+            compound.setTag(Tags.CraftOutput, inner);
+        }
+        else if(craftingOutput instanceof EssenceStack){
+            ((EssenceStack) craftingOutput).writeToNBT(Tags.CraftOutput, compound);
+        }
+    }
+
+    @Override
+    public void readCustomNBT(NBTTagCompound compound) {
+        slots = NBTUtil.readInventory(compound, slots.length);
+
+        if(compound.hasKey(Tags.Essence)) {
+            essenceStack = EssenceStack.readFromNBT(Tags.Essence, compound);
+        }
+
+        if(compound.hasKey(Tags.Buffer)) {
+            essenceBuffer = EssenceStack.readFromNBT(Tags.Buffer, compound);
+        }
+
+        burningTime = compound.getInteger(Tags.BurnTime);
+        totalBurningTime = compound.getInteger(Tags.TotalBurnTime);
+        craftingTime = compound.getInteger(Tags.CraftTime);
+
+        if(compound.hasKey(Tags.CraftOutput)){
+            NBTTagCompound inner = compound.getCompoundTag(Tags.CraftOutput);
+            if(inner.hasKey("id")){
+                craftingOutput = ItemStack.loadItemStackFromNBT(inner);
+            }
+            else {
+                craftingOutput = EssenceStack.readFromNBT(compound);
+            }
+        }
+    }
+
+    @Override
     public EssenceStack pullEssence(Essence essence, int max, boolean simulate) {
         if(simulate && essenceBuffer != null && essenceBuffer.essence == essence){
             return essenceBuffer;
@@ -113,6 +173,17 @@ public class TileEntitySoulforriumFurnace extends TileEntity implements IEssence
     @Override
     public boolean canBind() {
         return false;
+    }
+
+    @Override
+    public void handleTESync(byte key, Object value) {
+        if(value instanceof Integer) {
+            if (key == 0) {
+                burningTime = (Integer) value;
+            } else if (key == 1){
+                totalBurningTime = (Integer)value;
+            }
+        }
     }
 
     @Override
@@ -168,7 +239,13 @@ public class TileEntitySoulforriumFurnace extends TileEntity implements IEssence
                 }
 
                 worldObj.setBlockState(getPos(), worldObj.getBlockState(getPos()).withProperty(BlockSoulforriumFurnace.ACTIVE, true));
+
+                SPNet.sendToAllAround(new PacketTESync(getPos(), (byte)1, totalBurningTime), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), pos.getX(), pos.getY(), pos.getZ(), 8));
             }
+        }
+
+        if(worldObj.getTotalWorldTime() % 20 == 0){
+            SPNet.sendToAllAround(new PacketTESync(pos, (byte)0, burningTime), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), pos.getX(), pos.getY(), pos.getZ(), 8));
         }
     }
 
@@ -302,63 +379,6 @@ public class TileEntitySoulforriumFurnace extends TileEntity implements IEssence
     @Override
     public boolean hasCustomName() {
         return false;
-    }
-
-    @Override
-    public void writeToNBT(NBTTagCompound compound) {
-        super.writeToNBT(compound);
-
-        NBTUtil.writeInventory(slots, compound);
-
-        if(essenceStack != null) {
-            essenceStack.writeToNBT(Tags.Essence, compound);
-        }
-
-        if(essenceBuffer != null) {
-            essenceBuffer.writeToNBT(Tags.Buffer, compound);
-        }
-
-        compound.setInteger(Tags.BurnTime, burningTime);
-        compound.setInteger(Tags.TotalBurnTime, totalBurningTime);
-        compound.setInteger(Tags.CraftTime, craftingTime);
-
-        if(craftingOutput instanceof ItemStack){
-            NBTTagCompound inner = new NBTTagCompound();
-            ((ItemStack) craftingOutput).writeToNBT(inner);
-            compound.setTag(Tags.CraftOutput, inner);
-        }
-        else if(craftingOutput instanceof EssenceStack){
-            ((EssenceStack) craftingOutput).writeToNBT(Tags.CraftOutput, compound);
-        }
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        super.readFromNBT(compound);
-
-        slots = NBTUtil.readInventory(compound, slots.length);
-
-        if(compound.hasKey(Tags.Essence)) {
-            essenceStack = EssenceStack.readFromNBT(Tags.Essence, compound);
-        }
-
-        if(compound.hasKey(Tags.Buffer)) {
-            essenceBuffer = EssenceStack.readFromNBT(Tags.Buffer, compound);
-        }
-
-        burningTime = compound.getInteger(Tags.BurnTime);
-        totalBurningTime = compound.getInteger(Tags.TotalBurnTime);
-        craftingTime = compound.getInteger(Tags.CraftTime);
-
-        if(compound.hasKey(Tags.CraftOutput)){
-            NBTTagCompound inner = compound.getCompoundTag(Tags.CraftOutput);
-            if(inner.hasKey("id")){
-                craftingOutput = ItemStack.loadItemStackFromNBT(inner);
-            }
-            else {
-                craftingOutput = EssenceStack.readFromNBT(compound);
-            }
-        }
     }
 
     @Override

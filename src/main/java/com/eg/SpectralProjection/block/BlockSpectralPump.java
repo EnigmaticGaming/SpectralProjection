@@ -1,6 +1,6 @@
 package com.eg.SpectralProjection.block;
 
-import com.eg.SpectralProjection.tileEntity.TileEntitySpectralPump;
+import com.eg.SpectralProjection.tileEntity.TESpectralPump;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -15,6 +15,6 @@ public class BlockSpectralPump extends BlockContainerBase {
 
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileEntitySpectralPump();
+        return new TESpectralPump();
     }
 }

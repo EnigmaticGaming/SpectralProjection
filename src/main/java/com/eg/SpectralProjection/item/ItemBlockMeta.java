@@ -1,6 +1,6 @@
 package com.eg.SpectralProjection.item;
 
-import com.eg.SpectralProjection.util.IUnlocalizedNameProvider;
+import com.eg.SpectralProjection.util.interfaces.IUnlocalizedNameProvider;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;

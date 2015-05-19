@@ -9,7 +9,7 @@ import net.minecraft.util.BlockPos;
 /**
  * Created by Creysys on 19 Apr 15.
  */
-public class TileEntitySpectralPump extends TileEntity implements IUpdatePlayerListBox{
+public class TESpectralPump extends TEBase implements IUpdatePlayerListBox{
     BlockPos target;
 
     @Override

@@ -1,4 +1,4 @@
-package com.eg.SpectralProjection.util;
+package com.eg.SpectralProjection.util.interfaces;
 
 import net.minecraft.item.ItemStack;
 

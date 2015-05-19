@@ -7,6 +7,7 @@ import com.eg.SpectralProjection.entity.EntityShadowMan;
 import com.eg.SpectralProjection.event.EventRegister;
 import com.eg.SpectralProjection.gui.GuiHandler;
 import com.eg.SpectralProjection.item.*;
+import com.eg.SpectralProjection.net.SPNet;
 import com.eg.SpectralProjection.proxy.ProxyServer;
 import com.eg.SpectralProjection.recipe.RecipeRegister;
 import com.eg.SpectralProjection.util.world.multiblock.MultiblockRegister;
@@ -79,6 +80,9 @@ public class SpectralProjection
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
+        SPNet.initialize();
+
+
         creativeTab = new SpectralProjectionCreativeTab();
 
         //Essences
