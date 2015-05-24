@@ -5,13 +5,12 @@ import com.eg.SpectralProjection.api.essence.EssenceStack;
 import com.eg.SpectralProjection.api.essence.IEssenceHandler;
 import com.eg.SpectralProjection.api.recipe.RecipeManager;
 import com.eg.SpectralProjection.api.recipe.RecipeSoulforriumFurnace;
-import com.eg.SpectralProjection.api.recipe.RecipeSoulforriumFurnaceMetrusite;
 import com.eg.SpectralProjection.block.BlockSoulforriumFurnace;
 import com.eg.SpectralProjection.net.SPNet;
 import com.eg.SpectralProjection.net.packet.PacketTESync;
-import com.eg.SpectralProjection.util.helper.EssenceUtil;
-import com.eg.SpectralProjection.util.helper.ItemUtil;
-import com.eg.SpectralProjection.util.helper.NBTUtil;
+import com.eg.SpectralProjection.util.helper.HelperEssence;
+import com.eg.SpectralProjection.util.helper.HelperItem;
+import com.eg.SpectralProjection.util.helper.HelperNBT;
 import com.eg.SpectralProjection.util.interfaces.ITESyncHandler;
 import com.eg.SpectralProjection.util.nbt.Tags;
 import net.minecraft.block.state.IBlockState;
@@ -20,7 +19,6 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
@@ -28,9 +26,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import scala.Int;
-
-import java.util.InputMismatchException;
 
 /**
  * Created by Creysys on 19 Apr 15.
@@ -64,7 +59,7 @@ public class TESoulforriumFurnace extends TEBase implements IEssenceHandler, ITE
         }
 
         if (obj instanceof ItemStack) {
-            return ItemUtil.canMergeStacks(slots[2], (ItemStack) obj);
+            return HelperItem.canMergeStacks(slots[2], (ItemStack) obj);
         } else if (obj instanceof EssenceStack) {
             return essenceBuffer == null;
         }
@@ -79,7 +74,7 @@ public class TESoulforriumFurnace extends TEBase implements IEssenceHandler, ITE
         }
 
         if (craftingOutput instanceof ItemStack) {
-            slots[2] = ItemUtil.mergeStacks(slots[2], (ItemStack) craftingOutput);
+            slots[2] = HelperItem.mergeStacks(slots[2], (ItemStack) craftingOutput);
         } else if (craftingOutput instanceof EssenceStack) {
             essenceBuffer = ((EssenceStack) craftingOutput).copy();
         }
@@ -92,7 +87,7 @@ public class TESoulforriumFurnace extends TEBase implements IEssenceHandler, ITE
 
     @Override
     public void writeCustomNBT(NBTTagCompound compound) {
-        NBTUtil.writeInventory(slots, compound);
+        HelperNBT.writeInventory(slots, compound);
 
         if(essenceStack != null) {
             essenceStack.writeToNBT(Tags.Essence, compound);
@@ -118,7 +113,7 @@ public class TESoulforriumFurnace extends TEBase implements IEssenceHandler, ITE
 
     @Override
     public void readCustomNBT(NBTTagCompound compound) {
-        slots = NBTUtil.readInventory(compound, slots.length);
+        slots = HelperNBT.readInventory(compound, slots.length);
 
         if(compound.hasKey(Tags.Essence)) {
             essenceStack = EssenceStack.readFromNBT(Tags.Essence, compound);
@@ -193,8 +188,8 @@ public class TESoulforriumFurnace extends TEBase implements IEssenceHandler, ITE
         }
 
         if(essenceBuffer != null) {
-            if(EssenceUtil.canMergeStacks(essenceStack, essenceBuffer, ESSENCE_CAPACITY)){
-                essenceStack = EssenceUtil.mergeStacks(essenceStack, essenceBuffer, ESSENCE_CAPACITY);
+            if(HelperEssence.canMergeStacks(essenceStack, essenceBuffer, ESSENCE_CAPACITY)){
+                essenceStack = HelperEssence.mergeStacks(essenceStack, essenceBuffer, ESSENCE_CAPACITY);
                 essenceBuffer = null;
             }
         }

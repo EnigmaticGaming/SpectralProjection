@@ -6,7 +6,7 @@ import com.eg.SpectralProjection.item.ItemMaterial;
 import com.eg.SpectralProjection.util.client.IRenderRegisterHandler;
 import com.eg.SpectralProjection.util.interfaces.IUnlocalizedNameProvider;
 import com.eg.SpectralProjection.util.client.RenderRegister;
-import com.eg.SpectralProjection.util.helper.ItemUtil;
+import com.eg.SpectralProjection.util.helper.HelperItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -90,7 +90,7 @@ public class BlockOre extends Block implements IUnlocalizedNameProvider, IRender
         List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
         for(int i = 0; i < drops.stackSize; i++)
         {
-            ret.add(ItemUtil.setStackCopyAmount(drops, 1));
+            ret.add(HelperItem.setStackCopyAmount(drops, 1));
         }
 
         return ret;
@@ -141,8 +141,8 @@ public class BlockOre extends Block implements IUnlocalizedNameProvider, IRender
     public enum EnumVariant implements IStringSerializable {
         SOULFFORIUM(0, "soulforrium", null, 2),
         SOULATTITE(1, "soulattite", null, 2),
-        METRUSITE(2, "metrusite", ItemUtil.setStackCopyAmount(ItemMaterial.metrusitePaste, 3), 1),
-        QUARTZ(3, "quartz", ItemUtil.setStackCopyAmount(ItemMaterial.quartzShard, 3), 1);
+        METRUSITE(2, "metrusite", HelperItem.setStackCopyAmount(ItemMaterial.metrusitePaste, 3), 1),
+        QUARTZ(3, "quartz", HelperItem.setStackCopyAmount(ItemMaterial.quartzShard, 3), 1);
 
         private int meta;
         private String name;

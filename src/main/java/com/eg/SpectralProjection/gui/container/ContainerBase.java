@@ -1,6 +1,6 @@
 package com.eg.SpectralProjection.gui.container;
 
-import com.eg.SpectralProjection.util.helper.ItemUtil;
+import com.eg.SpectralProjection.util.helper.HelperItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -71,7 +71,7 @@ public abstract class ContainerBase extends Container {
                         break;
                     }
                 }
-                else if(ItemUtil.areStacksEqual(toStack, fromStack) && toStack.stackSize < 64) {
+                else if(HelperItem.areStacksEqual(toStack, fromStack) && toStack.stackSize < 64) {
 
                     int transferred = Math.min(64 - toStack.stackSize, fromStack.stackSize);
                     toStack.stackSize += transferred;

@@ -1,6 +1,6 @@
 package com.eg.SpectralProjection.api.recipe;
 
-import com.eg.SpectralProjection.util.helper.ItemUtil;
+import com.eg.SpectralProjection.util.helper.HelperItem;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -17,7 +17,7 @@ public class RecipeBase {
 
     public boolean matches(Object[] objs){
         for(int i = 0; i < input.length; i++){
-            ItemStack stack = ItemUtil.getStack(input[i]);
+            ItemStack stack = HelperItem.getStack(input[i]);
             if(!contains(stack, objs)){
                 return false;
             }
@@ -29,13 +29,13 @@ public class RecipeBase {
     private boolean contains(ItemStack stack, Object[] in){
         int ss = stack.stackSize;
         for(int i = 0; i < in.length; i++){
-            ItemStack stack1 = ItemUtil.getStack(in[i]);
+            ItemStack stack1 = HelperItem.getStack(in[i]);
             if(stack1 == null){
                 continue;
             }
 
 
-            if(ItemUtil.areStacksEqual(stack, stack1)){
+            if(HelperItem.areStacksEqual(stack, stack1)){
                 ss -= stack1.stackSize;
                 if(ss <= 0){
                     return true;

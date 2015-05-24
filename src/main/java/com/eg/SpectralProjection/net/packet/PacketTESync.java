@@ -1,7 +1,7 @@
 package com.eg.SpectralProjection.net.packet;
 
 import com.eg.SpectralProjection.net.SPSide;
-import com.eg.SpectralProjection.util.helper.SerializationHelper;
+import com.eg.SpectralProjection.util.helper.HelperSerialization;
 import com.eg.SpectralProjection.util.interfaces.ITESyncHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -34,16 +34,16 @@ public class PacketTESync extends PacketBase<PacketTESync> {
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        pos = SerializationHelper.readBlockPos(buf);
+        pos = HelperSerialization.readBlockPos(buf);
         key = buf.readByte();
-        value = SerializationHelper.readObject(buf);
+        value = HelperSerialization.readObject(buf);
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        SerializationHelper.writeBlockPos(pos, buf);
+        HelperSerialization.writeBlockPos(pos, buf);
         buf.writeByte(key);
-        SerializationHelper.writeObject(value, buf);
+        HelperSerialization.writeObject(value, buf);
     }
 
     @Override

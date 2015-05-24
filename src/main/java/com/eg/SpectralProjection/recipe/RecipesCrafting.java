@@ -6,7 +6,7 @@ import com.eg.SpectralProjection.block.BlockPylon;
 import com.eg.SpectralProjection.item.ItemIngot;
 import com.eg.SpectralProjection.item.ItemMaterial;
 import com.eg.SpectralProjection.item.ItemNugget;
-import com.eg.SpectralProjection.util.helper.ItemUtil;
+import com.eg.SpectralProjection.util.helper.HelperItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -45,7 +45,7 @@ public class RecipesCrafting {
         GameRegistry.addRecipe(block, "III", "III", "III", 'I', ingot);
         GameRegistry.addRecipe(ingot, "NNN", "NNN", "NNN", 'N', nugget);
 
-        GameRegistry.addRecipe(ItemUtil.setStackCopyAmount(ingot, 9), "B", 'B', block);
-        GameRegistry.addRecipe(ItemUtil.setStackCopyAmount(nugget, 9), "I", 'I', ingot);
+        GameRegistry.addRecipe(HelperItem.setStackCopyAmount(ingot, 9), "B", 'B', block);
+        GameRegistry.addRecipe(HelperItem.setStackCopyAmount(nugget, 9), "I", 'I', ingot);
     }
 }
