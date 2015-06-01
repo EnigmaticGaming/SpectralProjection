@@ -42,15 +42,18 @@ public class TESoulforriumFurnace extends TEBase implements IEssenceHandler, ITE
     public int totalBurningTime;
 
     private Object craftingOutput;
-    private int craftingTime;
+    public int craftingTime;
+    public int totalCraftingTime;
 
     public TESoulforriumFurnace(){
         slots = new ItemStack[getSizeInventory()];
 
         burningTime = 0;
+        totalBurningTime = 0;
 
         craftingOutput = null;
         craftingTime = 0;
+        totalCraftingTime = 0;
     }
 
     private boolean canCraft(Object obj) {
@@ -100,6 +103,7 @@ public class TESoulforriumFurnace extends TEBase implements IEssenceHandler, ITE
         compound.setInteger(Tags.BurnTime, burningTime);
         compound.setInteger(Tags.TotalBurnTime, totalBurningTime);
         compound.setInteger(Tags.CraftTime, craftingTime);
+        compound.setInteger(Tags.TotalCraftTime, totalCraftingTime);
 
         if(craftingOutput instanceof ItemStack){
             NBTTagCompound inner = new NBTTagCompound();
@@ -126,6 +130,7 @@ public class TESoulforriumFurnace extends TEBase implements IEssenceHandler, ITE
         burningTime = compound.getInteger(Tags.BurnTime);
         totalBurningTime = compound.getInteger(Tags.TotalBurnTime);
         craftingTime = compound.getInteger(Tags.CraftTime);
+        totalCraftingTime = compound.getInteger(Tags.TotalCraftTime);
 
         if(compound.hasKey(Tags.CraftOutput)){
             NBTTagCompound inner = compound.getCompoundTag(Tags.CraftOutput);
@@ -171,12 +176,25 @@ public class TESoulforriumFurnace extends TEBase implements IEssenceHandler, ITE
     }
 
     @Override
-    public void handleTESync(byte key, Object value) {
-        if(value instanceof Integer) {
-            if (key == 0) {
+    public void handleTESync(byte key, Object value)
+    {
+        if (value instanceof Integer)
+        {
+            if (key == 0)
+            {
                 burningTime = (Integer) value;
-            } else if (key == 1){
-                totalBurningTime = (Integer)value;
+            }
+            else if (key == 1)
+            {
+                totalBurningTime = (Integer) value;
+            }
+            else if (key == 2)
+            {
+                craftingTime = (Integer) value;
+            }
+            else if (key == 3)
+            {
+                totalCraftingTime = (Integer) value;
             }
         }
     }
@@ -209,6 +227,9 @@ public class TESoulforriumFurnace extends TEBase implements IEssenceHandler, ITE
                         if(canCraft(obj)) {
                             craftingOutput = obj;
                             craftingTime = recipe.craftingTime;
+                            totalCraftingTime = craftingTime;
+
+                            SPNet.sendToAllAround(new PacketTESync(getPos(), (byte)3, totalCraftingTime), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), pos.getX(), pos.getY(), pos.getZ(), 8));
                             break;
                         }
                     }
@@ -241,6 +262,7 @@ public class TESoulforriumFurnace extends TEBase implements IEssenceHandler, ITE
 
         if(worldObj.getTotalWorldTime() % 20 == 0){
             SPNet.sendToAllAround(new PacketTESync(pos, (byte)0, burningTime), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), pos.getX(), pos.getY(), pos.getZ(), 8));
+            SPNet.sendToAllAround(new PacketTESync(pos, (byte)2, craftingTime), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), pos.getX(), pos.getY(), pos.getZ(), 8));
         }
     }
 

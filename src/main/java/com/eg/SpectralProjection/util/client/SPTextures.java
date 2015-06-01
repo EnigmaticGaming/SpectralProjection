@@ -6,13 +6,15 @@ import net.minecraft.util.ResourceLocation;
 /**
  * Created by Creysys on 24 May 15.
  */
-public class SPTextures {
+public class SPTextures
+{
 
     public static final ResourceLocation screenSpectralContainmentUnit = make("gui/spectralContainmentUnit");
     public static final ResourceLocation screenSoulforriumFurnace = make("gui/soulforriumFurnace");
     public static final ResourceLocation screenOuijaBoard = make("gui/ouijaBoard");
 
-
+    public static final ResourceLocation essenceProgressEmpty = make("gui/elements/essenceProgress/empty");
+    public static final ResourceLocation essenceProgressFull = make("gui/elements/essenceProgress/full");
 
     public static final ResourceLocation essenceGreed = make("gui/elements/essenceIcon/greed");
     public static final ResourceLocation essenceCorruption = make("gui/elements/essenceIcon/corruption");
@@ -21,7 +23,8 @@ public class SPTextures {
     public static final ResourceLocation essenceEthreal = make("gui/elements/essenceIcon/ethreal");
 
 
-    public static ResourceLocation make(String s){
+    public static ResourceLocation make(String s)
+    {
         return new ResourceLocation(SpectralProjection.modid, "textures/" + s + ".png");
     }
 }

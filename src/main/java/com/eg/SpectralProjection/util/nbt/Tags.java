@@ -17,5 +17,6 @@ public class Tags {
     public static String BurnTime = "spBurnTime";
     public static String TotalBurnTime = "spTotalBurnTime";
     public static String CraftTime = "spCraftTime";
+    public static String TotalCraftTime = "spTotalCraftTime";
     public static String CraftOutput = "spCraftOutput";
 }

@@ -74,8 +74,10 @@ public class BlockSoulforriumFurnace extends BlockContainerBase
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
         if(world.isRemote){
-            return false;
+            return true;
         }
+
+        ((TESoulforriumFurnace)world.getTileEntity(pos)).essenceStack = null;
 
         player.openGui(SpectralProjection.instance, GuiID.SOULFORRIUM_FURNACE.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
         return true;
